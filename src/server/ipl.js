@@ -28,3 +28,12 @@ module.exports.matchesPerTeamPerYear = function (obj, tm) {
     return team;
 }
 
+module.exports.extraRunsPerTeam = function (matchObj, deliveryObj, yr, tm) {
+    let matchIds = matchObj.filter(elem => elem.team1 === tm || elem.team2 === tm && elem.season === yr).map(elem => elem.id);
+    // return matchIds.length;
+    let extraCount = deliveryObj.filter(elem => matchIds.includes(elem.match_id) && elem.extra_runs !== '0' && elem.extra_runs !== '' && elem.bowling_team === tm).reduce((acc, curr) => acc + Number(curr.extra_runs), 0);
+
+    let result = {};
+    result[tm] = extraCount;
+    return result;
+}
