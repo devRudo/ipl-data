@@ -17,7 +17,13 @@ return fs.readFile('./../data/matches.csv', 'utf8', function (err, data) {
         }
         matchResult.push(obj);
     }
-    // console.log(matchResult);
-    console.log("Matches Playes per Year are as follows :" + JSON.stringify(ipl.matchesPerYear(matchResult)));
+    console.log(ipl.matchesPerYear(matchResult));
+    let winnerTeams = matchResult.map(elem => elem.winner).filter((elem, index, arr) => elem !== "" && arr.indexOf(elem) === index);
+    // console.log(winnerTeams);
+    let out = [];
+    for (let i = 0; i < winnerTeams.length; i++) {
+        let winnerobj = ipl.matchesPerTeamPerYear(matchResult, winnerTeams[i]);
+        console.log(winnerobj);
+    }
 
 });
