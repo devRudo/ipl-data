@@ -1,0 +1,24 @@
+{
+  "name": "project-1",
+  "version": "1.0.0",
+  "description": "This is the ipl project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/devRudo/project-1.git"
+  },
+  "keywords": [
+    "ipl-project",
+    "ipl",
+    "project-1"
+  ],
+  "author": "Vijay Kumar Mishra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/devRudo/project-1/issues"
+  },
+  "homepage": "https://gitlab.com/devRudo/project-1#readme"
+}
