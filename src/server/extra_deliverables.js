@@ -56,7 +56,30 @@ module.exports.strikeRateViratPerseason = function (matchObj, deliveryObj) {
     return resultobj;
 }
 
-module.exports.highestNumberofTimesonePlayerHasbeenDismissedByAnother = function (matches, deliveries, bowler) {
+module.exports.playerDissmisal = function (deliveries) {
+    let obj = deliveries.filter(elem => elem.player_dismissed != '').map(elem => [elem.player_dismissed, elem.bowler]).reduce((acc, curr) => {
+        if (acc[[curr[0], curr[1]]] === undefined) {
+            acc[[curr[0], curr[1]]] = 1;
+        }
+        else {
+            acc[[curr[0], curr[1]]]++;
+        }
+        return acc;
+    }, {});
+    let countArr1 = [];
+    for (key in obj) {
+        countArr1.push(obj[key]);
+    }
+    // return countArr1.filter(elem => elem > 3);
+    let maxCount = Math.max(...countArr1);
+    // return maxCount;
+    let result = {};
+    for (key in obj) {
+        if (obj[key] == maxCount) {
+            result[key] = maxCount;
+        }
+    }
+    return result;
 
 }
 

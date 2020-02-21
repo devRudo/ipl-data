@@ -123,4 +123,19 @@ fs.readFile(pwd + '/../data/deliveries.csv', 'utf8', function (err, data) {
         if (err) throw err;
         console.log('File is modified successfully.');
     });
+    // console.log(extra.playerDissmisal(deliveryResult));
+    let content = extra.playerDissmisal(deliveryResult);
+    // console.log(extra.playerDissmisal(deliveryResult));
+    let result = [];
+    for (key in content) {
+        // console.log(key);
+        let batsman = key.split(",")[0];
+        let bowler = key.split(",")[1];
+        result.push(batsman + " Dismissed by " + bowler + " " + content[key] + " times");
+
+    }
+    fs.writeFileSync(pwd + '/../output/maxNumberofTimesofDissmissal.json', JSON.stringify(result) + '\n', function (err) {
+        if (err) throw err;
+        console.log('File is modified successfully.');
+    });
 });
