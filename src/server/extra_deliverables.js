@@ -42,7 +42,18 @@ module.exports.playerHighManoftheMatchPerSeason = function (obj) {
 }
 
 module.exports.strikeRateViratPerseason = function (matchObj, deliveryObj) {
-
+    let years = matchObj.map(elem => elem.season).filter((curr, index, arr) => arr.indexOf(curr) === index);
+    let resultobj = {};
+    for (let i = 0; i < years.length; i++) {
+        matchesPlayedinThisYear = matchObj.filter(elem => elem.season == years[i]).map(elem => elem.id);
+        let totalRuns = deliveryObj.filter(elem => elem.batsman === 'V Kohli' && matchesPlayedinThisYear.includes(elem.match_id)).reduce((acc, curr) => {
+            return acc + Number(curr.batsman_runs);
+        }, 0);
+        let totalBallsPLayed = deliveryObj.filter(elem => elem.batsman === 'V Kohli' && matchesPlayedinThisYear.includes(elem.match_id) && elem.wide_runs == 0).length;
+        let strikerate = ((totalRuns / totalBallsPLayed).toFixed(2) * 100).toFixed(2);
+        resultobj[years[i]] = strikerate;
+    }
+    return resultobj;
 }
 
 module.exports.highestNumberofTimesonePlayerHasbeenDismissedByAnother = function (matches, deliveries, bowler) {

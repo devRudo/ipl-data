@@ -118,5 +118,9 @@ fs.readFile(pwd + '/../data/deliveries.csv', 'utf8', function (err, data) {
     });
     // console.log("********* Top 10 Economical Bowlers in 2015 ********");
 
-    console.log(extra.strikeRateViratPerseason(matchResult, deliveryResult));
+    // console.log(extra.strikeRateViratPerseason(matchResult, deliveryResult));
+    fs.writeFileSync(pwd + '/../output/strikeRateViratPerseason.json', JSON.stringify(extra.strikeRateViratPerseason(matchResult, deliveryResult)) + '\n', function (err) {
+        if (err) throw err;
+        console.log('File is modified successfully.');
+    });
 });
