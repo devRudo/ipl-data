@@ -20,28 +20,25 @@ fs.readFile('./../data/matches.csv', 'utf8', function (err, data) {
     // console.log("********* Matches played per year ********");
     // console.log(ipl.matchesPerYear(matchResult));
     // console.log("********* Matches played per year ********");
-    // console.log();
-    // process.chdir('__dirname/');
-    // fs.readdir('./../ouput/', function (err, files) {
-    //     console.log(process.env.HOME);
-    // });
-    // fs.writeFile('/home/rudo/Desktop/Project-1/src/output/matchesPerYear.json', JSON.stringify(ipl.matchesPerYear(matchResult)), function (err) {
-    //     if (err) throw err;
-    //     console.log('File is created successfully.');
-    // });
+
+    fs.writeFileSync('../output/matchesPerYear.json', JSON.stringify(ipl.matchesPerYear(matchResult)) + '\n', function (err) {
+        if (err) throw err;
+        console.log('File is created successfully.');
+    });
 
 
     let winnerTeams = matchResult.map(elem => elem.winner).filter((elem, index, arr) => elem !== "" && arr.indexOf(elem) === index);
-    let out = [];
+    let out = {};
     // console.log("********* Matches played per team per year ********");
     for (let i = 0; i < winnerTeams.length; i++) {
         let winnerobj = ipl.matchesPerTeamPerYear(matchResult, winnerTeams[i]);
-        // console.log(winnerobj);
-        // fs.appendFile('/home/rudo/Desktop/Project-1/src/output/matchesPerTeamPerYear.json', JSON.stringify(winnerobj), function (err) {
-        //     if (err) throw err;
-        //     console.log('File is modified successfully.');
-        // });
+        index = i + 1;
+        out['Team ' + index] = winnerobj;
     }
+    fs.writeFileSync('../output/matchesPerTeamPerYear.json', JSON.stringify(out) + ',' + '\n', function (err) {
+        if (err) throw err;
+        console.log('File is modified successfully.');
+    });
 
     // console.log("********* Matches played per team per year ********" + "\n");
 
@@ -66,22 +63,24 @@ fs.readFile('./../data/deliveries.csv', 'utf8', function (err, data) {
     let year = '2016';
     let team = 'Pune Warriors';
     // console.log("********* Extra Runs Conceded Per team ********" + "\n");
-
+    let out = [];
     for (let i = 0; i < uniqueTeamsin2016.length; i++) {
         // console.log(ipl.extraRunsPerTeam(matchResult, deliveryResult, year, uniqueTeamsin2016[i]));
-        // fs.appendFile('/home/rudo/Desktop/Project-1/src/output/extraRunsPerTeam.json', JSON.stringify(ipl.extraRunsPerTeam(matchResult, deliveryResult, year, uniqueTeamsin2016[i])), function (err) {
-        //     if (err) throw err;
-        //     console.log('File is modified successfully.');
-        // });
+        out.push(ipl.extraRunsPerTeam(matchResult, deliveryResult, year, uniqueTeamsin2016[i]));
     }
-
+    // console.log(out);
+    fs.writeFileSync('../output/extraRunsPerTeam.json', JSON.stringify(out) + ',' + '\n', function (err) {
+        if (err) throw err;
+        console.log('File is modified successfully.');
+    });
     // console.log("********* Extra Runs Conceded Per team ********" + "\n");
 
     let matchIdsPlayedIn2015 = matchResult.filter(elem => elem.season === '2015').map(elem => elem.id);
+    // console.log(matchIdsPlayedIn2015);
     let uniqueBowlersin2015 = deliveryResult.filter(elem => matchIdsPlayedIn2015.includes(elem.match_id)).map(elem => elem.bowler).filter((elem, index, arr) => arr.indexOf(elem) === index);
     let arr = [];
     // console.log(uniqueBowlersin2015);
-    // let bowler = 'SN Thakur';
+    // let bowler = 'Yuvraj Singh';
     // console.log(ipl.topEconomicalBowlers(matchIdsPlayedIn2015, deliveryResult, bowler));
     for (let i = 0; i < uniqueBowlersin2015.length; i++) {
         let bowlersEconomy = ipl.topEconomicalBowlers(matchIdsPlayedIn2015, deliveryResult, uniqueBowlersin2015[i]);
@@ -99,9 +98,11 @@ fs.readFile('./../data/deliveries.csv', 'utf8', function (err, data) {
         obj[arr[i][0]] = arr[i][1];
     }
     // console.log(obj);
-    // fs.appendFile('/home/rudo/Desktop/Project-1/src/output/top10Bowlers.json', JSON.stringify(obj), function (err) {
-    //     if (err) throw err;
-    //     console.log('File is modified successfully.');
-    // });
+    fs.writeFileSync('../output/topEconomicalBowlers.json', JSON.stringify(out) + '\n', function (err) {
+        if (err) throw err;
+        console.log('File is modified successfully.');
+    });
     // console.log("********* Top 10 Economical Bowlers in 2015 ********");
+
+
 });
