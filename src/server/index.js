@@ -15,6 +15,7 @@ fs.readFile('./../data/matches.csv', 'utf8', function (err, data) {
         }
         matchResult.push(obj);
     }
+    // console.log(matchResult);
 
     // console.log("********* Matches played per year ********");
     // console.log(ipl.matchesPerYear(matchResult));
@@ -24,10 +25,10 @@ fs.readFile('./../data/matches.csv', 'utf8', function (err, data) {
     // fs.readdir('./../ouput/', function (err, files) {
     //     console.log(process.env.HOME);
     // });
-    fs.writeFile('/home/rudo/Desktop/Project-1/src/output/matchesPerYear.json', JSON.stringify(ipl.matchesPerYear(matchResult)), function (err) {
-        if (err) throw err;
-        console.log('File is created successfully.');
-    });
+    // fs.writeFile('/home/rudo/Desktop/Project-1/src/output/matchesPerYear.json', JSON.stringify(ipl.matchesPerYear(matchResult)), function (err) {
+    //     if (err) throw err;
+    //     console.log('File is created successfully.');
+    // });
 
 
     let winnerTeams = matchResult.map(elem => elem.winner).filter((elem, index, arr) => elem !== "" && arr.indexOf(elem) === index);
@@ -36,10 +37,10 @@ fs.readFile('./../data/matches.csv', 'utf8', function (err, data) {
     for (let i = 0; i < winnerTeams.length; i++) {
         let winnerobj = ipl.matchesPerTeamPerYear(matchResult, winnerTeams[i]);
         // console.log(winnerobj);
-        fs.appendFile('/home/rudo/Desktop/Project-1/src/output/matchesPerTeamPerYear.json', JSON.stringify(winnerobj), function (err) {
-            if (err) throw err;
-            console.log('File is modified successfully.');
-        });
+        // fs.appendFile('/home/rudo/Desktop/Project-1/src/output/matchesPerTeamPerYear.json', JSON.stringify(winnerobj), function (err) {
+        //     if (err) throw err;
+        //     console.log('File is modified successfully.');
+        // });
     }
 
     // console.log("********* Matches played per team per year ********" + "\n");
@@ -68,19 +69,22 @@ fs.readFile('./../data/deliveries.csv', 'utf8', function (err, data) {
 
     for (let i = 0; i < uniqueTeamsin2016.length; i++) {
         // console.log(ipl.extraRunsPerTeam(matchResult, deliveryResult, year, uniqueTeamsin2016[i]));
-        fs.appendFile('/home/rudo/Desktop/Project-1/src/output/extraRunsPerTeam.json', JSON.stringify(ipl.extraRunsPerTeam(matchResult, deliveryResult, year, uniqueTeamsin2016[i])), function (err) {
-            if (err) throw err;
-            console.log('File is modified successfully.');
-        });
+        // fs.appendFile('/home/rudo/Desktop/Project-1/src/output/extraRunsPerTeam.json', JSON.stringify(ipl.extraRunsPerTeam(matchResult, deliveryResult, year, uniqueTeamsin2016[i])), function (err) {
+        //     if (err) throw err;
+        //     console.log('File is modified successfully.');
+        // });
     }
 
     // console.log("********* Extra Runs Conceded Per team ********" + "\n");
 
     let matchIdsPlayedIn2015 = matchResult.filter(elem => elem.season === '2015').map(elem => elem.id);
-    let uniqueBowlers = deliveryResult.filter(elem => matchIdsPlayedIn2015.includes(elem.match_id)).map(elem => elem.bowler).filter((elem, index, arr) => arr.indexOf(elem) === index);
+    let uniqueBowlersin2015 = deliveryResult.filter(elem => matchIdsPlayedIn2015.includes(elem.match_id)).map(elem => elem.bowler).filter((elem, index, arr) => arr.indexOf(elem) === index);
     let arr = [];
-    for (let i = 0; i < uniqueBowlers.length; i++) {
-        let bowlersEconomy = ipl.topEconomicalBowlers(matchResult, deliveryResult, uniqueBowlers[i]);
+    // console.log(uniqueBowlersin2015);
+    // let bowler = 'SN Thakur';
+    // console.log(ipl.topEconomicalBowlers(matchIdsPlayedIn2015, deliveryResult, bowler));
+    for (let i = 0; i < uniqueBowlersin2015.length; i++) {
+        let bowlersEconomy = ipl.topEconomicalBowlers(matchIdsPlayedIn2015, deliveryResult, uniqueBowlersin2015[i]);
         for (let key in bowlersEconomy) {
             arr.push([key, bowlersEconomy[key]]);
         }
@@ -88,13 +92,16 @@ fs.readFile('./../data/deliveries.csv', 'utf8', function (err, data) {
     arr.sort(function (a, b) {
         return a[1] - b[1];
     });
+    // console.log(arr);
     // console.log("********* Top 10 Economical Bowlers in 2015 ********");
+    let obj = {};
     for (let i = 0; i < 10; i++) {
-        // console.log(arr[i]);
-        fs.appendFile('/home/rudo/Desktop/Project-1/src/output/top10Bowlers.json', JSON.stringify(arr[i]), function (err) {
-            if (err) throw err;
-            console.log('File is modified successfully.');
-        });
+        obj[arr[i][0]] = arr[i][1];
     }
+    // console.log(obj);
+    // fs.appendFile('/home/rudo/Desktop/Project-1/src/output/top10Bowlers.json', JSON.stringify(obj), function (err) {
+    //     if (err) throw err;
+    //     console.log('File is modified successfully.');
+    // });
     // console.log("********* Top 10 Economical Bowlers in 2015 ********");
 });

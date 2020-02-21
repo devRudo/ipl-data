@@ -37,10 +37,11 @@ module.exports.extraRunsPerTeam = function (matchObj, deliveryObj, yr, tm) {
 }
 
 module.exports.topEconomicalBowlers = function (matches, deliveries, bowler) {
-    let matchIdsPlayedIn2015 = matches.filter(elem => elem.season === '2015').map(elem => elem.id);
-    let deliveriesMadebyBowler = deliveries.filter(elem => elem.bowler === bowler && matchIdsPlayedIn2015.includes(elem.match_id));
-    let totalNumberOfovers = deliveriesMadebyBowler.map(elem => elem.over).filter((elem, index, arr) => arr.indexOf(elem) === index).length;
-    let totalRunsConceded = deliveriesMadebyBowler.map(elem => elem.total_runs).reduce((acc, curr) => acc + Number(curr), 0);
+    let deliveriesMadebyBowler = deliveries.filter(elem => elem.bowler === bowler && matches.includes(elem.match_id)).filter(elem => elem.wide_runs === '0' && elem.noball_runs === '0');
+    let totalNumberOfovers = deliveriesMadebyBowler.length / 6;
+    // console.log(totalNumberOfovers);
+    let totalRunsConceded = deliveriesMadebyBowler.map(elem => Number(elem.total_runs) - Number(elem.bye_runs) - Number(elem.legbye_runs)).reduce((acc, curr) => acc + Number(curr), 0);
+    // console.log(totalRunsConceded);
     let economyOfBowler = totalRunsConceded / totalNumberOfovers;
     let bowlerObj = {};
     bowlerObj[bowler] = economyOfBowler.toFixed(2);
