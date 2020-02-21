@@ -52,9 +52,7 @@ module.exports.topEconomicalBowlers = function (matches, deliveries, bowler) {
 
         return acc;
     }, 0);
-    // console.log(totalRunsConceded);
     let economyOfBowler = (totalRunsConceded / totalNumberOfovers).toFixed(2);
-    // return economyOfBowler;
 
     let bowlerObj = {};
     bowlerObj[bowler] = economyOfBowler;

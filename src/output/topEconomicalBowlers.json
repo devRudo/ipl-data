@@ -1,26 +1,12 @@
-[
-    {
-        "Rising Pune Supergiants": 108
-    },
-    {
-        "Mumbai Indians": 102
-    },
-    {
-        "Kolkata Knight Riders": 122
-    },
-    {
-        "Delhi Daredevils": 106
-    },
-    {
-        "Gujarat Lions": 98
-    },
-    {
-        "Kings XI Punjab": 100
-    },
-    {
-        "Sunrisers Hyderabad": 107
-    },
-    {
-        "Royal Challengers Bangalore": 156
-    }
-]
+{
+    "RN ten Doeschate": "4.00",
+    "J Yadav": "4.14",
+    "V Kohli": "5.46",
+    "R Ashwin": "5.85",
+    "S Nadeem": "6.14",
+    "Parvez Rasool": "6.20",
+    "MC Henriques": "6.32",
+    "Z Khan": "6.45",
+    "MA Starc": "6.77",
+    "GB Hogg": "6.86"
+}
