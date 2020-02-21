@@ -138,4 +138,10 @@ fs.readFile(pwd + '/../data/deliveries.csv', 'utf8', function (err, data) {
         if (err) throw err;
         console.log('File is modified successfully.');
     });
+    // console.log(extra.bowlerWithBestEconomyInSuperOvers(deliveryResult));
+    let result1 = extra.bowlerWithBestEconomyInSuperOvers(deliveryResult);
+    fs.writeFileSync(pwd + '/../output/mostEconomicalBowlerSuperOver.json', JSON.stringify(result1) + '\n', function (err) {
+        if (err) throw err;
+        console.log('File is modified successfully.');
+    });
 });
