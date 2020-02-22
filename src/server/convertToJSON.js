@@ -4,10 +4,10 @@ const pwd = process.env.PWD;
 let matchResult = [];
 let deliveryResult = [];
 
-let data1 = fs.readFileSync(pwd + '/../data/matches.csv', 'utf8', function (err, data) {
+let data1 = fs.readFileSync(pwd + '/src/data/matches.csv', 'utf8', function (err, data) {
     return data;
 });
-let data2 = fs.readFileSync(pwd + '/../data/deliveries.csv', 'utf8', function (err, data) {
+let data2 = fs.readFileSync(pwd + '/src/data/deliveries.csv', 'utf8', function (err, data) {
     return data;
 });
 
