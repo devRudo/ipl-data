@@ -70,16 +70,21 @@ module.exports.playerDissmisal = function (deliveries) {
     for (key in obj) {
         countArr1.push(obj[key]);
     }
-    // return countArr1.filter(elem => elem > 3);
     let maxCount = Math.max(...countArr1);
-    // return maxCount;
     let result = {};
     for (key in obj) {
         if (obj[key] == maxCount) {
             result[key] = maxCount;
         }
     }
-    return result;
+    let res = [];
+    for (key in result) {
+        let batsman = key.split(",")[0];
+        let bowler = key.split(",")[1];
+        res.push(batsman + " Dismissed by " + bowler + " " + result[key] + " times");
+
+    }
+    return res;
 
 }
 
@@ -117,5 +122,4 @@ module.exports.bowlerWithBestEconomyInSuperOvers = function (deliveries) {
             return key + " is most economical bowlers in super overs";
         }
     }
-    // let superOverDeliveries = deliveries.filter(elem => elem.is_super_over != 0).map(elem => [elem.is_super_over, elem.bowler]);
 }
