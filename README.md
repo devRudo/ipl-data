@@ -56,6 +56,6 @@ Step 5 : To verify the installation Go to the terminal and run following command
 
 ## After installing node js in your system just run the project by running following command:
 
-> $ npm run start\
+> $ npm run start
 
 ## then go to the folder Output inside src to view the outputs
