@@ -1,13 +1,19 @@
 const fs = require('fs');
 
-const pwd = process.env.PWD;
+const pwd = process.cwd();
 let matchResult = [];
 let deliveryResult = [];
 
 let data1 = fs.readFileSync(pwd + '/src/data/matches.csv', 'utf8', function (err, data) {
+    if (err) {
+        console.log(err);
+    }
     return data;
 });
 let data2 = fs.readFileSync(pwd + '/src/data/deliveries.csv', 'utf8', function (err, data) {
+    if (err) {
+        console.log(err);
+    }
     return data;
 });
 
