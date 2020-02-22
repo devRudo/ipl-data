@@ -54,7 +54,7 @@ Step 5 : To verify the installation Go to the terminal and run following command
 > $ node -v
 > $ npm -v
 
-## After installing node js in your system just run the project by running following command:
+## After installing node js in your system just clone this project into your system and then run the project by running following command in your cloned directory:
 
 > $ npm run start
 
