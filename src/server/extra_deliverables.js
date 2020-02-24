@@ -41,17 +41,26 @@ module.exports.playerHighManoftheMatchPerSeason = function (obj) {
     return resultobj;
 }
 
-module.exports.strikeRateViratPerseason = function (matchObj, deliveryObj) {
-    let years = matchObj.map(elem => elem.season).filter((curr, index, arr) => arr.indexOf(curr) === index);
+module.exports.strikeRateViratPerseason = function (matches, deliveries) {
+    let years = matches.map(elem => elem.season).filter((curr, index, arr) => arr.indexOf(curr) === index);
+    let ViratKohliDeliveries = deliveries.filter(elem => elem.batsman == 'V Kohli');
     let resultobj = {};
     for (let i = 0; i < years.length; i++) {
-        matchesPlayedinThisYear = matchObj.filter(elem => elem.season == years[i]).map(elem => elem.id);
-        let totalRuns = deliveryObj.filter(elem => elem.batsman === 'V Kohli' && matchesPlayedinThisYear.includes(elem.match_id)).reduce((acc, curr) => {
+        let matchesPlayedinThisYear = matches.filter(elem => elem.season == years[i]).reduce((acc, curr) => {
+            if (acc[curr.id] == undefined) {
+                acc[curr.id] = 1;
+            }
+            else {
+                acc[curr.id]++;
+            }
+            return acc;
+        }, {});
+        let totalRuns = ViratKohliDeliveries.filter(elem => matchesPlayedinThisYear[elem.match_id] != undefined).reduce((acc, curr) => {
             return acc + Number(curr.batsman_runs);
         }, 0);
-        let totalBallsPLayed = deliveryObj.filter(elem => elem.batsman === 'V Kohli' && matchesPlayedinThisYear.includes(elem.match_id) && elem.wide_runs == 0).length;
-        let strikerate = ((totalRuns / totalBallsPLayed).toFixed(2) * 100).toFixed(2);
-        resultobj[years[i]] = strikerate;
+        let totalBallsPLayed = ViratKohliDeliveries.filter(elem => matchesPlayedinThisYear[elem.match_id] != undefined && elem.wide_runs == 0).length;
+        let strikerate = ((totalRuns / totalBallsPLayed) * 100).toFixed(2);
+        resultobj[years[i]] = Number(strikerate);
     }
     return resultobj;
 }

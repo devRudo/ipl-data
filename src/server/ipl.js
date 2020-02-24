@@ -1,14 +1,13 @@
 module.exports.matchesPerYear = function (matches) {
-    let matchesPerYear = matches.map(elem => elem.season).reduce((countPerYear, match) => {
-        if (countPerYear[match.season] === undefined) {
-            countPerYear[match.season] = 1;
+    return matches.reduce((acc, curr) => {
+        if (acc[curr.season] == undefined) {
+            acc[curr.season] = 1;
         }
         else {
-            countPerYear[match.season]++;
+            acc[curr.season]++;
         }
-        return countPerYear;
+        return acc;
     }, {});
-    return matchesPerYear;
 }
 
 module.exports.matchesPerTeamPerYear = function (matches) {
@@ -104,7 +103,7 @@ module.exports.topEconomicalBowlers = function (matches, deliveries, year) {
     });
     let obj = {};
     for (let i = 0; i < 10; i++) {
-        obj[arr[i][0]] = arr[i][1];
+        obj[arr[i][0]] = Number(arr[i][1]);
     }
     return obj;
 }
