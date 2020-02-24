@@ -1,14 +1,14 @@
-module.exports.matchesPerYear = function (obj) {
-    let obj1 = obj.reduce((acc, curr) => {
-        if (acc[curr.season] === undefined) {
-            acc[curr.season] = 1;
+module.exports.matchesPerYear = function (matches) {
+    let matchesPerYear = matches.map(elem => elem.season).reduce((countPerYear, match) => {
+        if (countPerYear[match.season] === undefined) {
+            countPerYear[match.season] = 1;
         }
         else {
-            acc[curr.season]++;
+            countPerYear[match.season]++;
         }
-        return acc;
+        return countPerYear;
     }, {});
-    return obj1;
+    return matchesPerYear;
 }
 
 module.exports.matchesPerTeamPerYear = function (matches) {
@@ -35,23 +35,21 @@ module.exports.matchesPerTeamPerYear = function (matches) {
     return out;
 }
 
-module.exports.extraRunsPerTeam = function (matchObj, deliveryObj, yr) {
-    let matchIdsPlayedIn2016 = matchObj.filter(elem => elem.season == yr).map(elem => elem.id);
-    let startId = matchIdsPlayedIn2016[0];
-    let hash = matchIdsPlayedIn2016.reduce((acc, curr) => {
-        let key = curr - startId;
-        if (acc[key] == undefined) {
-            acc[key] = 1;
+module.exports.extraRunsPerTeam = function (matches, deliveries, year) {
+    let matchIdsPlayedIn2016 = matches.filter(elem => elem.season == year).map(elem => elem.id).reduce((acc, curr) => {
+        if (acc[curr] == undefined) {
+            acc[curr] = 1;
         }
         else {
-            acc[key]++;
+            acc[curr]++;
         }
         return acc;
     }, {});
-    let bowlingTeams = deliveryObj.filter(elem => hash[elem.match_id - startId] != undefined).map(elem => elem.bowling_team).filter((elem, index, arr) => arr.indexOf(elem) === index);
+    let deliveriesin2016 = deliveries.filter(elem => matchIdsPlayedIn2016[elem.match_id] != undefined);
+    let bowlingTeams = deliveriesin2016.map(elem => elem.bowling_team).filter((elem, index, arr) => arr.indexOf(elem) === index);
     let res = [];
     for (let i = 0; i < bowlingTeams.length; i++) {
-        let extraCount = deliveryObj.filter(elem => hash[elem.match_id - startId] != undefined && elem.extra_runs !== '0' && elem.extra_runs !== '' && elem.bowling_team === bowlingTeams[i]).reduce((acc, curr) => acc + Number(curr.extra_runs), 0);
+        let extraCount = deliveriesin2016.filter(elem => elem.extra_runs !== '0' && elem.extra_runs !== '' && elem.bowling_team === bowlingTeams[i]).reduce((acc, curr) => acc + Number(curr.extra_runs), 0);
         let result = {};
         result[bowlingTeams[i]] = extraCount;
         res.push(result);
@@ -61,24 +59,23 @@ module.exports.extraRunsPerTeam = function (matchObj, deliveryObj, yr) {
 }
 
 module.exports.topEconomicalBowlers = function (matches, deliveries, year) {
-    let matchIdsPlayedIn2015 = matches.filter(elem => elem.season == year).map(elem => elem.id);
-    let startId = matchIdsPlayedIn2015[0];
-    let hash = matchIdsPlayedIn2015.reduce((acc, curr) => {
-        let key = curr - startId;
-        if (acc[key] == undefined) {
-            acc[key] = 1;
+    let matchIdsPlayedIn2015 = matches.filter(elem => elem.season == year).map(elem => elem.id).reduce((acc, curr) => {
+        let key = curr;
+        if (acc[curr] == undefined) {
+            acc[curr] = 1;
         }
         else {
-            acc[key]++;
+            acc[curr]++;
         }
         return acc;
     }, {});
-    let uniqueBowlersin2015 = deliveries.filter(elem => hash[elem.match_id - startId] != undefined).map(elem => elem.bowler).filter((elem, index, arr) => arr.indexOf(elem) === index);
+    deliveriesin2015 = deliveries.filter(elem => matchIdsPlayedIn2015[elem.match_id] != undefined);
+    let uniqueBowlersin2015 = deliveriesin2015.map(elem => elem.bowler).filter((elem, index, arr) => arr.indexOf(elem) === index);
     let arr = [];
     for (let i = 0; i < uniqueBowlersin2015.length; i++) {
-        let deliveriesMadebyBowler = deliveries.filter(elem => elem.bowler === uniqueBowlersin2015[i] && hash[elem.match_id - startId] != undefined).filter(elem => elem.wide_runs === '0' && elem.noball_runs === '0');
+        let deliveriesMadebyBowler = deliveriesin2015.filter(elem => elem.bowler === uniqueBowlersin2015[i]).filter(elem => elem.wide_runs === '0' && elem.noball_runs === '0');
         let totalNumberOfovers = (deliveriesMadebyBowler.length / 6).toFixed(2);
-        let totalRunsConceded = deliveries.filter(elem => hash[elem.match_id - startId] != undefined && elem.bowler === uniqueBowlersin2015[i]).map(elem => [elem.total_runs, elem.legbye_runs, elem.bye_runs]).reduce(function (acc, curr) {
+        let totalRunsConceded = deliveriesin2015.filter(elem => elem.bowler === uniqueBowlersin2015[i]).map(elem => [elem.total_runs, elem.legbye_runs, elem.bye_runs]).reduce(function (acc, curr) {
             if (curr[1] == 0 && curr[2] == 0) {
                 acc += Number(curr[0]);
             }

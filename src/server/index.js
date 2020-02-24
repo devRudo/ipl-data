@@ -5,6 +5,8 @@ const ipl = require('./ipl.js');
 const extra = require('./extra_deliverables.js');
 let pwd = process.cwd();
 
+
+console.time();
 fs.writeFile(pwd + '/src/output/matchesPerYear.json', JSON.stringify(ipl.matchesPerYear(conversion.matchResult)) + '\n', function (err) {
     if (err) {
         console.error("Opoops ! Something went wrong");
@@ -67,4 +69,5 @@ fs.writeFile(pwd + '/src/output/maxNumberofTimesofDissmissal.json', JSON.stringi
     }
     console.log('maxNumberofTimesofDissmissal.json is created successfully.');
 });
-console.log("Hello");
+
+console.timeEnd();
