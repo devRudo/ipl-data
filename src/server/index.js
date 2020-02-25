@@ -4,8 +4,18 @@ const conversion = require('./convertToJSON.js');
 const ipl = require('./ipl.js');
 const extra = require('./extra_deliverables.js');
 let pwd = process.cwd();
-let v8 = require('v8');
 
+/* Writing the number of matches played per year matchesPerYear.json file
+
+Example Output:
+    {
+    "year": number of matches played,
+    "2009": 57,
+    "2010": 60,
+    "2011": 73
+}
+
+*/
 
 fs.writeFile(pwd + '/src/output/matchesPerYear.json', JSON.stringify(ipl.matchesPerYear(conversion.matchResult)) + '\n', function (err) {
     if (err) {
@@ -14,12 +24,49 @@ fs.writeFile(pwd + '/src/output/matchesPerYear.json', JSON.stringify(ipl.matches
     console.log('matchesPerYear.json is created successfully.');
 });
 
+/* Writing the number of matches played per team per year matchesPerTeamPerYear.json file
+
+Example Output:
+    {
+    "Team 12": {
+        "Pune Warriors": {
+            "2011": 4,
+            "2012": 4,
+            "2013": 4
+        }
+    },
+    "Team 13": {
+        "Kochi Tuskers Kerala": {
+            "2011": 6
+        }
+    },
+    "Team 14": {
+        "Rising Pune Supergiants": {
+            "2016": 5
+        }
+    }
+}
+
+*/
 fs.writeFile(pwd + '/src/output/matchesPerTeamPerYear.json', JSON.stringify(ipl.matchesPerTeamPerYear(conversion.matchResult)) + '\n', function (err) {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
     console.log('matchesPerTeamPerYear.json is created successfully.');
 });
+
+/* Writing the number of times each team won the toss and won the match too, wonTossWonMatchPerTeam.json file
+
+Example Output:
+    {
+        "Team Name": numbersofWintosswinmatch
+    "Rising Pune Supergiant": 5,
+    "Kolkata Knight Riders": 44,
+    "Kings XI Punjab": 28,
+    "Royal Challengers Bangalore": 35
+}
+
+*/
 
 fs.writeFile(pwd + '/src/output/wonTossWonMatchPerTeam.json', JSON.stringify(extra.wonTossWonMatchPerTeam(conversion.matchResult)) + '\n', function (err) {
     if (err) {
@@ -28,12 +75,36 @@ fs.writeFile(pwd + '/src/output/wonTossWonMatchPerTeam.json', JSON.stringify(ext
     console.log('wonTossWonMatchPerTeam.json is created successfully.');
 });
 
+/* Writing the player per season who has won the highest number of player of the match in that season, playerHighManoftheMatchPerSeason.json file
+
+Example Output:
+    {
+    "year": {
+        "player name": number of player of the match won
+    },
+    "2009": {
+        "YK Pathan": 3
+    },
+    "2010": {
+        "SR Tendulkar": 4
+    }
+}
+
+*/
+
 fs.writeFile(pwd + '/src/output/playerHighManoftheMatchPerSeason.json', JSON.stringify(extra.playerHighManoftheMatchPerSeason(conversion.matchResult)) + '\n', function (err) {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
     console.log('playerHighManoftheMatchPerSeason.json is created successfully.');
 });
+
+/* Writing the most economical bowler in super overs, mostEconomicalBowlerSuperOver.json file
+
+Example Output:
+   "JJ Bumrah is most economical bowlers in super overs"
+
+*/
 
 fs.writeFile(pwd + '/src/output/mostEconomicalBowlerSuperOver.json', JSON.stringify(extra.bowlerWithBestEconomyInSuperOvers(conversion.deliveryResult)) + '\n', function (err) {
     if (err) {
@@ -42,12 +113,40 @@ fs.writeFile(pwd + '/src/output/mostEconomicalBowlerSuperOver.json', JSON.string
     console.log('mostEconomicalBowlerSuperOver.json is created successfully.');
 });
 
+/* Writing strike rate of virat kohli per season, strikeRateViratPerseason.json file
+
+Example Output:
+    {
+        "Year": strikerate,
+    "2008": 105.1,
+    "2009": 112.33,
+    "2010": 144.81
+}
+
+*/
+
 fs.writeFile(pwd + '/src/output/strikeRateViratPerseason.json', JSON.stringify(extra.strikeRateViratPerseason(conversion.matchResult, conversion.deliveryResult)) + '\n', function (err) {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
     console.log('strikeRateViratPerseason.json is created successfully.');
 });
+
+/* Writing extra run conceded per team in the year 2016, extraRunsPerTeam.json file
+
+Example Output:
+    [
+    {
+        "Team name": extra runs conceded
+    },
+    {
+        "Mumbai Indians": 102
+    },
+    {
+        "Kolkata Knight Riders": 122
+    }
+]
+*/
 
 fs.writeFile(pwd + '/src/output/extraRunsPerTeam.json', JSON.stringify(ipl.extraRunsPerTeam(conversion.matchResult, conversion.deliveryResult, '2016')) + '\n', function (err) {
     if (err) {
@@ -56,6 +155,18 @@ fs.writeFile(pwd + '/src/output/extraRunsPerTeam.json', JSON.stringify(ipl.extra
     console.log('extraRunsPerTeam.json is created successfully.');
 });
 
+
+/* Writing top economical bowlers in 2015, topEconomicalBowlers.json file
+
+Example Output:
+    {
+        "Bowler name": economy,
+    "RN ten Doeschate": 4,
+    "J Yadav": 4.14,
+    "V Kohli": 5.46
+}
+*/
+
 fs.writeFile(pwd + '/src/output/topEconomicalBowlers.json', JSON.stringify(ipl.topEconomicalBowlers(conversion.matchResult, conversion.deliveryResult, '2015')) + '\n', function (err) {
     if (err) {
         console.error("Opoops ! Something went wrong");
@@ -63,6 +174,13 @@ fs.writeFile(pwd + '/src/output/topEconomicalBowlers.json', JSON.stringify(ipl.t
     console.log('topEconomicalBowlers.json is created successfully.');
 });
 
+
+/* Writing the highest number of times a player is dismissed by another player in all season, maxNumberofTimesofDissmissal.json file
+
+Example Output:
+    [Batsman name dismissed by bowler name n times]
+    ["MS Dhoni Dismissed by Z Khan 7 times"]
+*/
 fs.writeFile(pwd + '/src/output/maxNumberofTimesofDissmissal.json', JSON.stringify(extra.playerDissmisal(conversion.deliveryResult)) + '\n', function (err) {
     if (err) {
         console.error("Opoops ! Something went wrong");

@@ -1,5 +1,5 @@
-module.exports.wonTossWonMatchPerTeam = function (obj) {
-    return obj.filter(elem => elem.toss_winner == elem.winner).reduce(function (acc, curr) {
+module.exports.wonTossWonMatchPerTeam = function (matches) {
+    return matches.filter(match => match.toss_winner == match.winner).reduce(function (acc, curr) {
         if (acc[curr.winner] === undefined) {
             acc[curr.winner] = 1;
         }
@@ -10,12 +10,11 @@ module.exports.wonTossWonMatchPerTeam = function (obj) {
     }, {});
 }
 
-module.exports.playerHighManoftheMatchPerSeason = function (obj) {
-    let years = obj.map(elem => elem.season).filter((curr, index, arr) => arr.indexOf(curr) === index);
-    let resultobj = {};
+module.exports.playerHighManoftheMatchPerSeason = function (matches) {
+    let years = matches.map(match => match.season).filter((match, index, matches) => matches.indexOf(match) === index);
+    let players = {};
     for (let i = 0; i < years.length; i++) {
-        // console.log(years[i]);
-        let players = obj.filter(elem => elem.season === years[i]).map(elem => elem.player_of_match).reduce((acc, curr) => {
+        let players = matches.filter(match => match.season === years[i]).map(match => match.player_of_match).reduce((acc, curr) => {
             if (acc[curr] === undefined) {
                 acc[curr] = 1;
             }
@@ -24,29 +23,28 @@ module.exports.playerHighManoftheMatchPerSeason = function (obj) {
             }
             return acc;
         }, {});
-        let countArr = [];
+        let manoftheMatchCount = [];
         for (key in players) {
-            countArr.push(players[key]);
+            manoftheMatchCount.push(players[key]);
         }
-        let highestCount = Math.max(...countArr);
-        // let result = [];
+        let highestCount = Math.max(...manoftheMatchCount);
         let player = {};
         for (key in players) {
             if (players[key] == highestCount) {
                 player[key] = highestCount;
             }
         }
-        resultobj[years[i]] = player;
+        players[years[i]] = player;
     }
-    return resultobj;
+    return players;
 }
 
 module.exports.strikeRateViratPerseason = function (matches, deliveries) {
-    let years = matches.map(elem => elem.season).filter((curr, index, arr) => arr.indexOf(curr) === index);
-    let ViratKohliDeliveries = deliveries.filter(elem => elem.batsman == 'V Kohli');
+    let years = matches.map(match => match.season).filter((curr, index, arr) => arr.indexOf(curr) === index);
+    let ViratKohliDeliveries = deliveries.filter(delivery => delivery.batsman == 'V Kohli');
     let resultobj = {};
     for (let i = 0; i < years.length; i++) {
-        let matchesPlayedinThisYear = matches.filter(elem => elem.season == years[i]).reduce((acc, curr) => {
+        let matchesPlayedinThisYear = matches.filter(match => match.season == years[i]).reduce((acc, curr) => {
             if (acc[curr.id] == undefined) {
                 acc[curr.id] = 1;
             }
@@ -55,7 +53,7 @@ module.exports.strikeRateViratPerseason = function (matches, deliveries) {
             }
             return acc;
         }, {});
-        let totalRuns = ViratKohliDeliveries.filter(elem => matchesPlayedinThisYear[elem.match_id] != undefined).reduce((acc, curr) => {
+        let totalRuns = ViratKohliDeliveries.filter(delivery => matchesPlayedinThisYear[delivery.match_id] != undefined).reduce((acc, curr) => {
             return acc + Number(curr.batsman_runs);
         }, 0);
         let totalBallsPLayed = ViratKohliDeliveries.filter(elem => matchesPlayedinThisYear[elem.match_id] != undefined && elem.wide_runs == 0).length;
@@ -66,7 +64,7 @@ module.exports.strikeRateViratPerseason = function (matches, deliveries) {
 }
 
 module.exports.playerDissmisal = function (deliveries) {
-    let obj = deliveries.filter(elem => elem.player_dismissed != '' && elem.dismissal_kind != 'run out').map(elem => [elem.player_dismissed, elem.bowler]).reduce((acc, curr) => {
+    let obj = deliveries.filter(delivery => delivery.player_dismissed != '' && delivery.dismissal_kind != 'run out').map(delivery => [delivery.player_dismissed, delivery.bowler]).reduce((acc, curr) => {
         if (acc[[curr[0], curr[1]]] === undefined) {
             acc[[curr[0], curr[1]]] = 1;
         }
@@ -75,11 +73,11 @@ module.exports.playerDissmisal = function (deliveries) {
         }
         return acc;
     }, {});
-    let countArr1 = [];
+    let dissmissalArray = [];
     for (key in obj) {
-        countArr1.push(obj[key]);
+        dissmissalArray.push(obj[key]);
     }
-    let maxCount = Math.max(...countArr1);
+    let maxCount = Math.max(...dissmissalArray);
     let result = {};
     for (key in obj) {
         if (obj[key] == maxCount) {
@@ -98,13 +96,12 @@ module.exports.playerDissmisal = function (deliveries) {
 }
 
 module.exports.bowlerWithBestEconomyInSuperOvers = function (deliveries) {
-    let superOverDeliveries = deliveries.filter(elem => elem.is_super_over != 0);
-    let uniqueBowlersSuperOvers = superOverDeliveries.map(elem => elem.bowler).filter((elem, index, arr) => arr.indexOf(elem) == index);
+    let superOverDeliveries = deliveries.filter(delivery => delivery.is_super_over != 0);
+    let uniqueBowlersSuperOvers = superOverDeliveries.map(delivery => delivery.bowler).filter((elem, index, arr) => arr.indexOf(elem) == index);
     let superOverObj = {};
     for (let i = 0; i < uniqueBowlersSuperOvers.length; i++) {
         let totalDeliveries = superOverDeliveries.filter(elem => elem.bowler == uniqueBowlersSuperOvers[i]).filter(elem => elem.wide_runs === '0' && elem.noball_runs === '0').length;
         let totalOvers = (totalDeliveries / 6).toFixed(2);
-        // return totalOvers;
         let totalRuns = superOverDeliveries.filter(elem => elem.bowler == uniqueBowlersSuperOvers[i]).map(elem => [elem.total_runs, elem.legbye_runs, elem.bye_runs]).reduce(function (acc, curr) {
             if (curr[1] == 0 && curr[2] == 0) {
                 acc += Number(curr[0]);

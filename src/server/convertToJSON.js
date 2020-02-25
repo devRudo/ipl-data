@@ -4,40 +4,45 @@ const pwd = process.cwd();
 let matchResult = [];
 let deliveryResult = [];
 
-let data1 = fs.readFileSync(pwd + '/src/data/matches.csv', 'utf8', function (err, data) {
+/* Reading the CSV files and getting the file content */
+let matchescsv = fs.readFileSync(pwd + '/src/data/matches.csv', 'utf8', (err, data) => {
     if (err) {
         console.log(err);
     }
     return data;
 });
-let data2 = fs.readFileSync(pwd + '/src/data/deliveries.csv', 'utf8', function (err, data) {
+let deliveriescsv = fs.readFileSync(pwd + '/src/data/deliveries.csv', 'utf8', (err, data) => {
     if (err) {
         console.log(err);
     }
     return data;
 });
 
-let rows1 = data1.split(/\r?\n/).filter((elem) => elem !== "");
-let keys1 = rows1[0].split(",");
+
+/* Conversion of csv data to Array of JSON Objects */
+let rows1 = matchescsv.split(/\r?\n/).filter(row => row !== "");
+let matchesColumns = rows1[0].split(",");
 
 for (let i = 1; i < rows1.length; i++) {
-    let obj1 = {};
-    let currentRow1 = rows1[i].split(",");
-    for (let j = 0; j < keys1.length; j++) {
-        obj1[keys1[j]] = currentRow1[j];
+    let match = {};
+    let currentRowmatch = rows1[i].split(",");
+    for (let j = 0; j < matchesColumns.length; j++) {
+        match[matchesColumns[j]] = currentRowmatch[j];
     }
-    matchResult.push(obj1);
+    matchResult.push(match);
 }
-let rows2 = data2.split(/\r?\n/).filter((elem) => elem !== "");
-let keys2 = rows2[0].split(",");
+let rows2 = deliveriescsv.split(/\r?\n/).filter(row => row !== "");
+let deliveriesColumns = rows2[0].split(",");
 for (let i = 1; i < rows2.length; i++) {
-    let obj2 = {};
-    let currentRow2 = rows2[i].split(",");
-    for (let j = 0; j < keys2.length; j++) {
-        obj2[keys2[j]] = currentRow2[j];
+    let delivery = {};
+    let currentRowDelivery = rows2[i].split(",");
+    for (let j = 0; j < deliveriesColumns.length; j++) {
+        delivery[deliveriesColumns[j]] = currentRowDelivery[j];
     }
-    deliveryResult.push(obj2);
+    deliveryResult.push(delivery);
 }
+
+/* Exporting the two JSON Arrays for matches and deliveries */
 
 module.exports.matchResult = matchResult;
 module.exports.deliveryResult = deliveryResult;
