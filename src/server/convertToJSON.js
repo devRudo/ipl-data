@@ -8,14 +8,17 @@ let deliveryResult = [];
 let matchescsv = fs.readFileSync(pwd + '/src/data/matches.csv', 'utf8', (err, data) => {
     if (err) {
         console.log(err);
+    } else {
+        return data;
     }
-    return data;
 });
 let deliveriescsv = fs.readFileSync(pwd + '/src/data/deliveries.csv', 'utf8', (err, data) => {
     if (err) {
         console.log(err);
     }
-    return data;
+    else {
+        return data;
+    }
 });
 
 

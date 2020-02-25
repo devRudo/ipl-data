@@ -17,11 +17,13 @@ Example Output:
 
 */
 
-fs.writeFile(pwd + '/src/output/matchesPerYear.json', JSON.stringify(ipl.matchesPerYear(conversion.matchResult)) + '\n', function (err) {
+fs.writeFile(pwd + '/src/output/matchesPerYear.json', JSON.stringify(ipl.matchesPerYear(conversion.matchResult)) + '\n', (err) => {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
-    console.log('matchesPerYear.json is created successfully.');
+    else {
+        console.error('matchesPerYear.json is created successfully.');
+    }
 });
 
 /* Writing the number of matches played per team per year matchesPerTeamPerYear.json file
@@ -48,11 +50,13 @@ Example Output:
 }
 
 */
-fs.writeFile(pwd + '/src/output/matchesPerTeamPerYear.json', JSON.stringify(ipl.matchesPerTeamPerYear(conversion.matchResult)) + '\n', function (err) {
+fs.writeFile(pwd + '/src/output/matchesPerTeamPerYear.json', JSON.stringify(ipl.matchesPerTeamPerYear(conversion.matchResult)) + '\n', (err) => {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
-    console.log('matchesPerTeamPerYear.json is created successfully.');
+    else {
+        console.error('matchesPerTeamPerYear.json is created successfully.');
+    }
 });
 
 /* Writing the number of times each team won the toss and won the match too, wonTossWonMatchPerTeam.json file
@@ -68,11 +72,13 @@ Example Output:
 
 */
 
-fs.writeFile(pwd + '/src/output/wonTossWonMatchPerTeam.json', JSON.stringify(extra.wonTossWonMatchPerTeam(conversion.matchResult)) + '\n', function (err) {
+fs.writeFile(pwd + '/src/output/wonTossWonMatchPerTeam.json', JSON.stringify(extra.wonTossWonMatchPerTeam(conversion.matchResult)) + '\n', (err) => {
     if (err) {
-        return console.error(err);
+        console.error(err);
     }
-    console.log('wonTossWonMatchPerTeam.json is created successfully.');
+    else {
+        console.error('wonTossWonMatchPerTeam.json is created successfully.');
+    }
 });
 
 /* Writing the player per season who has won the highest number of player of the match in that season, playerHighManoftheMatchPerSeason.json file
@@ -92,11 +98,13 @@ Example Output:
 
 */
 
-fs.writeFile(pwd + '/src/output/playerHighManoftheMatchPerSeason.json', JSON.stringify(extra.playerHighManoftheMatchPerSeason(conversion.matchResult)) + '\n', function (err) {
+fs.writeFile(pwd + '/src/output/playerHighManoftheMatchPerSeason.json', JSON.stringify(extra.playerHighManoftheMatchPerSeason(conversion.matchResult)) + '\n', (err) => {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
-    console.log('playerHighManoftheMatchPerSeason.json is created successfully.');
+    else {
+        console.error('playerHighManoftheMatchPerSeason.json is created successfully.');
+    }
 });
 
 /* Writing the most economical bowler in super overs, mostEconomicalBowlerSuperOver.json file
@@ -106,11 +114,13 @@ Example Output:
 
 */
 
-fs.writeFile(pwd + '/src/output/mostEconomicalBowlerSuperOver.json', JSON.stringify(extra.bowlerWithBestEconomyInSuperOvers(conversion.deliveryResult)) + '\n', function (err) {
+fs.writeFile(pwd + '/src/output/mostEconomicalBowlerSuperOver.json', JSON.stringify(extra.bowlerWithBestEconomyInSuperOvers(conversion.deliveryResult)) + '\n', (err) => {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
-    console.log('mostEconomicalBowlerSuperOver.json is created successfully.');
+    else {
+        console.error('mostEconomicalBowlerSuperOver.json is created successfully.');
+    }
 });
 
 /* Writing strike rate of virat kohli per season, strikeRateViratPerseason.json file
@@ -125,11 +135,13 @@ Example Output:
 
 */
 
-fs.writeFile(pwd + '/src/output/strikeRateViratPerseason.json', JSON.stringify(extra.strikeRateViratPerseason(conversion.matchResult, conversion.deliveryResult)) + '\n', function (err) {
+fs.writeFile(pwd + '/src/output/strikeRateViratPerseason.json', JSON.stringify(extra.strikeRateViratPerseason(conversion.matchResult, conversion.deliveryResult)) + '\n', (err) => {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
-    console.log('strikeRateViratPerseason.json is created successfully.');
+    else {
+        console.error('strikeRateViratPerseason.json is created successfully.');
+    }
 });
 
 /* Writing extra run conceded per team in the year 2016, extraRunsPerTeam.json file
@@ -148,11 +160,13 @@ Example Output:
 ]
 */
 
-fs.writeFile(pwd + '/src/output/extraRunsPerTeam.json', JSON.stringify(ipl.extraRunsPerTeam(conversion.matchResult, conversion.deliveryResult, '2016')) + '\n', function (err) {
+fs.writeFile(pwd + '/src/output/extraRunsPerTeam.json', JSON.stringify(ipl.extraRunsPerTeam(conversion.matchResult, conversion.deliveryResult, '2016')) + '\n', (err) => {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
-    console.log('extraRunsPerTeam.json is created successfully.');
+    else {
+        console.error('extraRunsPerTeam.json is created successfully.');
+    }
 });
 
 
@@ -167,11 +181,13 @@ Example Output:
 }
 */
 
-fs.writeFile(pwd + '/src/output/topEconomicalBowlers.json', JSON.stringify(ipl.topEconomicalBowlers(conversion.matchResult, conversion.deliveryResult, '2015')) + '\n', function (err) {
+fs.writeFile(pwd + '/src/output/topEconomicalBowlers.json', JSON.stringify(ipl.topEconomicalBowlers(conversion.matchResult, conversion.deliveryResult, '2015')) + '\n', (err) => {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
-    console.log('topEconomicalBowlers.json is created successfully.');
+    else {
+        console.error('topEconomicalBowlers.json is created successfully.');
+    }
 });
 
 
@@ -181,9 +197,11 @@ Example Output:
     [Batsman name dismissed by bowler name n times]
     ["MS Dhoni Dismissed by Z Khan 7 times"]
 */
-fs.writeFile(pwd + '/src/output/maxNumberofTimesofDissmissal.json', JSON.stringify(extra.playerDissmisal(conversion.deliveryResult)) + '\n', function (err) {
+fs.writeFile(pwd + '/src/output/maxNumberofTimesofDissmissal.json', JSON.stringify(extra.playerDissmisal(conversion.deliveryResult)) + '\n', (err) => {
     if (err) {
         console.error("Opoops ! Something went wrong");
     }
-    console.log('maxNumberofTimesofDissmissal.json is created successfully.');
+    else {
+        console.error('maxNumberofTimesofDissmissal.json is created successfully.');
+    }
 });
