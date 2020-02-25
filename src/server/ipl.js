@@ -1,4 +1,4 @@
-module.exports.matchesPerYear = function (matches) {
+module.exports.matchesPerYear = (matches) => {
     return matches.reduce((acc, curr) => {
         if (acc[curr.season] == undefined) {
             acc[curr.season] = 1;
@@ -10,7 +10,7 @@ module.exports.matchesPerYear = function (matches) {
     }, {});
 }
 
-module.exports.matchesPerTeamPerYear = function (matches) {
+module.exports.matchesPerTeamPerYear = (matches) => {
     let winnerTeams = Array.from(new Set(matches.map(match => match.winner).filter((match, index, matches) => match !== "")));
     let finalObj = {};
     for (let i = 0; i < winnerTeams.length; i++) {
@@ -34,7 +34,7 @@ module.exports.matchesPerTeamPerYear = function (matches) {
     return finalObj;
 }
 
-module.exports.extraRunsPerTeam = function (matches, deliveries, year) {
+module.exports.extraRunsPerTeam = (matches, deliveries, year) => {
     let matchIdsPlayedIn2016 = matches.filter(match => match.season == year).map(match => match.id).reduce((acc, curr) => {
         if (acc[curr] == undefined) {
             acc[curr] = 1;
@@ -57,7 +57,7 @@ module.exports.extraRunsPerTeam = function (matches, deliveries, year) {
 
 }
 
-module.exports.topEconomicalBowlers = function (matches, deliveries, year) {
+module.exports.topEconomicalBowlers = (matches, deliveries, year) => {
     let matchIdsPlayedIn2015 = matches.filter(match => match.season == year).map(match => match.id).reduce((acc, curr) => {
         if (acc[curr] == undefined) {
             acc[curr] = 1;

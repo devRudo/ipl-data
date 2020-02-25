@@ -1,5 +1,5 @@
-module.exports.wonTossWonMatchPerTeam = function (matches) {
-    return matches.filter(match => match.toss_winner == match.winner).reduce(function (acc, curr) {
+module.exports.wonTossWonMatchPerTeam = (matches) => {
+    return matches.filter(match => match.toss_winner == match.winner).reduce((acc, curr) => {
         if (acc[curr.winner] === undefined) {
             acc[curr.winner] = 1;
         }
@@ -10,7 +10,7 @@ module.exports.wonTossWonMatchPerTeam = function (matches) {
     }, {});
 }
 
-module.exports.playerHighManoftheMatchPerSeason = function (matches) {
+module.exports.playerHighManoftheMatchPerSeason = (matches) => {
     let years = matches.map(match => match.season).filter((match, index, matches) => matches.indexOf(match) === index);
     let playersObj = {};
     for (let i = 0; i < years.length; i++) {
@@ -39,7 +39,7 @@ module.exports.playerHighManoftheMatchPerSeason = function (matches) {
     return playersObj;
 }
 
-module.exports.strikeRateViratPerseason = function (matches, deliveries) {
+module.exports.strikeRateViratPerseason = (matches, deliveries) => {
     let years = matches.map(match => match.season).filter((curr, index, arr) => arr.indexOf(curr) === index);
     let ViratKohliDeliveries = deliveries.filter(delivery => delivery.batsman == 'V Kohli');
     let resultobj = {};
@@ -63,7 +63,7 @@ module.exports.strikeRateViratPerseason = function (matches, deliveries) {
     return resultobj;
 }
 
-module.exports.playerDissmisal = function (deliveries) {
+module.exports.playerDissmisal = (deliveries) => {
     let obj = deliveries.filter(delivery => delivery.player_dismissed != '' && delivery.dismissal_kind != 'run out').map(delivery => [delivery.player_dismissed, delivery.bowler]).reduce((acc, curr) => {
         if (acc[[curr[0], curr[1]]] === undefined) {
             acc[[curr[0], curr[1]]] = 1;
@@ -95,7 +95,7 @@ module.exports.playerDissmisal = function (deliveries) {
 
 }
 
-module.exports.bowlerWithBestEconomyInSuperOvers = function (deliveries) {
+module.exports.bowlerWithBestEconomyInSuperOvers = (deliveries) => {
     let superOverDeliveries = deliveries.filter(delivery => delivery.is_super_over != 0);
     let uniqueBowlersSuperOvers = superOverDeliveries.map(delivery => delivery.bowler).filter((elem, index, arr) => arr.indexOf(elem) == index);
     let superOverObj = {};
