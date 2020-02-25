@@ -12,7 +12,7 @@ module.exports.wonTossWonMatchPerTeam = function (matches) {
 
 module.exports.playerHighManoftheMatchPerSeason = function (matches) {
     let years = matches.map(match => match.season).filter((match, index, matches) => matches.indexOf(match) === index);
-    let players = {};
+    let playersObj = {};
     for (let i = 0; i < years.length; i++) {
         let players = matches.filter(match => match.season === years[i]).map(match => match.player_of_match).reduce((acc, curr) => {
             if (acc[curr] === undefined) {
@@ -34,9 +34,9 @@ module.exports.playerHighManoftheMatchPerSeason = function (matches) {
                 player[key] = highestCount;
             }
         }
-        players[years[i]] = player;
+        playersObj[years[i]] = player;
     }
-    return players;
+    return playersObj;
 }
 
 module.exports.strikeRateViratPerseason = function (matches, deliveries) {
