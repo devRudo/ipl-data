@@ -102,7 +102,7 @@ module.exports.bowlerWithBestEconomyInSuperOvers = (deliveries) => {
     for (let i = 0; i < uniqueBowlersSuperOvers.length; i++) {
         let totalDeliveries = superOverDeliveries.filter(elem => elem.bowler == uniqueBowlersSuperOvers[i]).filter(elem => elem.wide_runs === '0' && elem.noball_runs === '0').length;
         let totalOvers = (totalDeliveries / 6).toFixed(2);
-        let totalRuns = superOverDeliveries.filter(elem => elem.bowler == uniqueBowlersSuperOvers[i]).map(elem => [elem.total_runs, elem.legbye_runs, elem.bye_runs]).reduce(function (acc, curr) {
+        let totalRuns = superOverDeliveries.filter(elem => elem.bowler == uniqueBowlersSuperOvers[i]).map(elem => [elem.total_runs, elem.legbye_runs, elem.bye_runs]).reduce((acc, curr) => {
             if (curr[1] == 0 && curr[2] == 0) {
                 acc += Number(curr[0]);
             }

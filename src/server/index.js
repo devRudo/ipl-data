@@ -75,7 +75,7 @@ csv()
         // */
         fs.writeFile(pwd + '/src/output/wonTossWonMatchPerTeam.json', JSON.stringify(extra.wonTossWonMatchPerTeam(matches)) + '\n', (err) => {
             if (err) {
-                return console.error(err);
+                console.error(err);
             }
             else {
                 console.error('wonTossWonMatchPerTeam.json is created successfully.');

@@ -73,7 +73,7 @@ module.exports.topEconomicalBowlers = (matches, deliveries, year) => {
     for (let i = 0; i < uniqueBowlersin2015.length; i++) {
         let deliveriesMadebyBowler = deliveriesin2015.filter(delivery => delivery.bowler === uniqueBowlersin2015[i]).filter(delivery => delivery.wide_runs === '0' && delivery.noball_runs === '0');
         let totalNumberOfovers = (deliveriesMadebyBowler.length / 6).toFixed(2);
-        let totalRunsConceded = deliveriesin2015.filter(delivery => delivery.bowler === uniqueBowlersin2015[i]).map(delivery => [delivery.total_runs, delivery.legbye_runs, delivery.bye_runs]).reduce(function (acc, curr) {
+        let totalRunsConceded = deliveriesin2015.filter(delivery => delivery.bowler === uniqueBowlersin2015[i]).map(delivery => [delivery.total_runs, delivery.legbye_runs, delivery.bye_runs]).reduce((acc, curr) => {
             if (curr[1] == 0 && curr[2] == 0) {
                 acc += Number(curr[0]);
             }
@@ -94,7 +94,7 @@ module.exports.topEconomicalBowlers = (matches, deliveries, year) => {
             bowlerswithEconomy.push([key, bowlerObj[key]]);
         }
     }
-    bowlerswithEconomy.sort(function (a, b) {
+    bowlerswithEconomy.sort((a, b) => {
         return a[1] - b[1];
     });
     let sortedEconomy = {};
