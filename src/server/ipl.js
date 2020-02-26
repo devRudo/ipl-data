@@ -88,18 +88,9 @@ module.exports.topEconomicalBowlers = (matches, deliveries, year) => {
         }, 0);
         let economyOfBowler = (totalRunsConceded / totalNumberOfovers).toFixed(2);
         let bowlerObj = {};
-        bowlerObj[uniqueBowlersin2015[i]] = economyOfBowler;
-
-        for (let key in bowlerObj) {
-            bowlerswithEconomy.push([key, bowlerObj[key]]);
-        }
+        bowlerObj[uniqueBowlersin2015[i]] = Number(economyOfBowler);
+        bowlerswithEconomy.push(bowlerObj);
     }
-    bowlerswithEconomy.sort((a, b) => {
-        return a[1] - b[1];
-    });
-    let sortedEconomy = {};
-    for (let i = 0; i < 10; i++) {
-        sortedEconomy[bowlerswithEconomy[i][0]] = Number(bowlerswithEconomy[i][1]);
-    }
-    return sortedEconomy;
+    bowlerswithEconomy.sort((a, b) => Object.values(a)[0] - Object.values(b)[0]);
+    return bowlerswithEconomy.slice(0, 10);
 }
