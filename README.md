@@ -14,8 +14,11 @@ In the output folder you will get the following outputs:
 2. Number of matches won of per team per year in IPL.
 3. Extra runs conceded per team in 2016.
 4. Top 10 economical bowlers in 2015.
-5. Number of times each team won the toss and also won the match.
-6. Player per season who has won the highest number of Player of the Match awards.
-7. Strike rate of the batsman Virat Kohli for each season.
-8. Highest number of times one player has been dismissed by another player.
-9. Bowler with the best economy in super overs.
+
+Extra Deliverables:
+
+1. Number of times each team won the toss and also won the match.
+2. Player per season who has won the highest number of Player of the Match awards.
+3. Strike rate of the batsman Virat Kohli for each season.
+4. Highest number of times one player has been dismissed by another player.
+5. Bowler with the best economy in super overs.
