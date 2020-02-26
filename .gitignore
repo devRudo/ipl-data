@@ -40,6 +40,7 @@ build/Release
 node_modules/
 jspm_packages/
 src/output/
+src/json/
 
 # TypeScript v1 declaration files
 typings/
