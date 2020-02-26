@@ -54,7 +54,7 @@ module.exports.strikeRateViratPerseason = (matches, deliveries) => {
             return acc;
         }, {});
         let totalRuns = ViratKohliDeliveries.filter(delivery => matchesPlayedinThisYear[delivery.match_id] != undefined).reduce((acc, curr) => {
-            return acc + Number(curr.batsman_runs);
+            return acc + (curr.batsman_runs);
         }, 0);
         let totalBallsPLayed = ViratKohliDeliveries.filter(elem => matchesPlayedinThisYear[elem.match_id] != undefined && elem.wide_runs == 0).length;
         let strikerate = ((totalRuns / totalBallsPLayed) * 100).toFixed(2);
@@ -100,17 +100,17 @@ module.exports.bowlerWithBestEconomyInSuperOvers = (deliveries) => {
     let uniqueBowlersSuperOvers = superOverDeliveries.map(delivery => delivery.bowler).filter((elem, index, arr) => arr.indexOf(elem) == index);
     let superOverObj = {};
     for (let i = 0; i < uniqueBowlersSuperOvers.length; i++) {
-        let totalDeliveries = superOverDeliveries.filter(elem => elem.bowler == uniqueBowlersSuperOvers[i]).filter(elem => elem.wide_runs === '0' && elem.noball_runs === '0').length;
+        let totalDeliveries = superOverDeliveries.filter(elem => elem.bowler == uniqueBowlersSuperOvers[i]).filter(elem => elem.wide_runs == 0 && elem.noball_runs == 0).length;
         let totalOvers = (totalDeliveries / 6).toFixed(2);
         let totalRuns = superOverDeliveries.filter(elem => elem.bowler == uniqueBowlersSuperOvers[i]).map(elem => [elem.total_runs, elem.legbye_runs, elem.bye_runs]).reduce((acc, curr) => {
             if (curr[1] == 0 && curr[2] == 0) {
-                acc += Number(curr[0]);
+                acc += (curr[0]);
             }
             else if (curr[1] != 0) {
-                acc += Number(curr[0]) - Number(curr[1]);
+                acc += (curr[0]) - (curr[1]);
             }
             else if (curr[2] != 0) {
-                acc += Number(curr[0]) - Number(curr[2]);
+                acc += (curr[0]) - (curr[2]);
             }
 
             return acc;
@@ -120,7 +120,7 @@ module.exports.bowlerWithBestEconomyInSuperOvers = (deliveries) => {
     }
     let countArr2 = [];
     for (key in superOverObj) {
-        countArr2.push(Number(superOverObj[key]));
+        countArr2.push((superOverObj[key]));
     }
     let minEconomy = Math.min(...countArr2);
     for (let key in superOverObj) {

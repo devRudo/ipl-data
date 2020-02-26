@@ -31,10 +31,14 @@ fs.stat(pwd + '/src/output', (err, stats) => {
 });
 
 let writeOutputs = () => {
-    csv()
+    csv({
+        checkType: true
+    })
         .fromFile(matchesFilePath)
         .then((matches) => {
-            csv().fromFile(deliveriesFilePath)
+            csv({
+                checkType: true
+            }).fromFile(deliveriesFilePath)
                 .then((deliveries) => {
                     // /* Writing the number of matches played per year matchesPerYear.json file
 

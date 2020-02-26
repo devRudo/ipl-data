@@ -48,7 +48,7 @@ module.exports.extraRunsPerTeam = (matches, deliveries, year) => {
     let bowlingTeams = deliveriesin2016.map(delivery => delivery.bowling_team).filter((delivery, index, deliveries) => deliveries.indexOf(delivery) === index);
     let teams = [];
     for (let i = 0; i < bowlingTeams.length; i++) {
-        let extraCount = deliveriesin2016.filter(delivery => delivery.extra_runs !== '0' && delivery.extra_runs !== '' && delivery.bowling_team === bowlingTeams[i]).reduce((acc, curr) => acc + Number(curr.extra_runs), 0);
+        let extraCount = deliveriesin2016.filter(delivery => delivery.extra_runs !== '0' && delivery.extra_runs !== '' && delivery.bowling_team === bowlingTeams[i]).reduce((acc, curr) => acc + (curr.extra_runs), 0);
         let team = {};
         team[bowlingTeams[i]] = extraCount;
         teams.push(team);
@@ -71,17 +71,17 @@ module.exports.topEconomicalBowlers = (matches, deliveries, year) => {
     let uniqueBowlersin2015 = Array.from(new Set(deliveriesin2015.map(delivery => delivery.bowler)));
     let bowlerswithEconomy = [];
     for (let i = 0; i < uniqueBowlersin2015.length; i++) {
-        let deliveriesMadebyBowler = deliveriesin2015.filter(delivery => delivery.bowler === uniqueBowlersin2015[i]).filter(delivery => delivery.wide_runs === '0' && delivery.noball_runs === '0');
+        let deliveriesMadebyBowler = deliveriesin2015.filter(delivery => delivery.bowler === uniqueBowlersin2015[i]).filter(delivery => delivery.wide_runs == 0 && delivery.noball_runs == 0);
         let totalNumberOfovers = (deliveriesMadebyBowler.length / 6).toFixed(2);
         let totalRunsConceded = deliveriesin2015.filter(delivery => delivery.bowler === uniqueBowlersin2015[i]).map(delivery => [delivery.total_runs, delivery.legbye_runs, delivery.bye_runs]).reduce((acc, curr) => {
             if (curr[1] == 0 && curr[2] == 0) {
-                acc += Number(curr[0]);
+                acc += (curr[0]);
             }
             else if (curr[1] != 0) {
-                acc += Number(curr[0]) - Number(curr[1]);
+                acc += (curr[0]) - (curr[1]);
             }
             else if (curr[2] != 0) {
-                acc += Number(curr[0]) - Number(curr[2]);
+                acc += (curr[0]) - (curr[2]);
             }
 
             return acc;
