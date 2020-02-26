@@ -4,6 +4,7 @@ To run this project you need to have node js installed in your system so install
 
 ## After installing node js in your system just clone this project into your system and then run the project by running following command in your cloned directory
 
+> $ npm install
 > $ npm run start
 
 ## Then go to the folder Output inside src to view the outputs
