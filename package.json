@@ -4,7 +4,7 @@
   "description": "This is the ipl project",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/server/index.js"
+    "start": "node ./src/server/index.js && node ./src/server/server.js"
   },
   "repository": {
     "type": "git",

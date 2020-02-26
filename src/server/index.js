@@ -7,7 +7,7 @@ let pwd = process.cwd();
 const matchesFilePath = path.join(pwd + '/src/data/matches.csv');
 const deliveriesFilePath = path.join(pwd + '/src/data/deliveries.csv');
 
-// Creatig  directory if does not exist
+// Creatig output directory if does not exist
 fs.stat(pwd + '/src/output', (err, stats) => {
     if (err && err.errno == -2) {
         fs.mkdir(pwd + '/src/output', (err) => {
