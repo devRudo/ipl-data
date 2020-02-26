@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://gitlab.com/devRudo/project-1/issues"
   },
-  "homepage": "https://gitlab.com/devRudo/project-1#readme"
+  "homepage": "https://gitlab.com/devRudo/project-1#readme",
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
 }
