@@ -7,6 +7,7 @@ let pwd = process.cwd();
 const matchesFilePath = path.join(pwd + '/src/data/matches.csv');
 const deliveriesFilePath = path.join(pwd + '/src/data/deliveries.csv');
 
+console.time();
 
 // Creatig  directory if does not exist
 fs.stat(pwd + '/src/output', (err, stats) => {
@@ -33,103 +34,102 @@ let writeOutputs = () => {
     csv()
         .fromFile(matchesFilePath)
         .then((matches) => {
-
-            // /* Writing the number of matches played per year matchesPerYear.json file
-
-            // Example Output:
-            //     {
-            //     "year": number of matches played,
-            //     "2009": 57,
-            //     "2010": 60,
-            //     "2011": 73
-            // }
-
-            // */
-            fs.writeFile(pwd + '/src/output/matchesPerYear.json', JSON.stringify(ipl.matchesPerYear(matches)) + '\n', (err) => {
-                if (err) {
-                    console.error("Opoops ! Something went wrong");
-                }
-                else {
-                    console.error('matchesPerYear.json is created successfully.');
-                }
-            });
-            /* Writing the number of matches played per team per year matchesPerTeamPerYear.json file
-
-             Example Output:
-                 {
-                 "Team 12": {
-                     "Pune Warriors": {
-                         "2011": 4,
-                         "2012": 4,
-                         "2013": 4
-                     }
-                 },
-                 "Team 13": {
-                     "Kochi Tuskers Kerala": {
-                         "2011": 6
-                     }
-                 },
-                 "Team 14": {
-                     "Rising Pune Supergiants": {
-                         "2016": 5
-                     }
-                 }
-             }
-
-             */
-            fs.writeFile(pwd + '/src/output/matchesPerTeamPerYear.json', JSON.stringify(ipl.matchesPerTeamPerYear(matches)) + '\n', (err) => {
-                if (err) {
-                    console.error("Opoops ! Something went wrong");
-                }
-                else {
-                    console.error('matchesPerTeamPerYear.json is created successfully.');
-                }
-            });
-            // /* Writing the number of times each team won the toss and won the match too, wonTossWonMatchPerTeam.json file
-
-            // Example Output:
-            //     {
-            //         "Team Name": numbersofWintosswinmatch
-            //     "Rising Pune Supergiant": 5,
-            //     "Kolkata Knight Riders": 44,
-            //     "Kings XI Punjab": 28,
-            //     "Royal Challengers Bangalore": 35
-            // }
-
-            // */
-            fs.writeFile(pwd + '/src/output/wonTossWonMatchPerTeam.json', JSON.stringify(extra.wonTossWonMatchPerTeam(matches)) + '\n', (err) => {
-                if (err) {
-                    console.error(err);
-                }
-                else {
-                    console.error('wonTossWonMatchPerTeam.json is created successfully.');
-                }
-            });
-            /* Writing the player per season who has won the highest number of player of the match in that season, playerHighManoftheMatchPerSeason.json file
-
-             Example Output:
-                 {
-                 "year": {
-                     "player name": number of player of the match won
-                 },
-                 "2009": {
-                     "YK Pathan": 3
-                 },
-                 "2010": {
-                     "SR Tendulkar": 4
-                 }
-             }
-            */
-            fs.writeFile(pwd + '/src/output/playerHighManoftheMatchPerSeason.json', JSON.stringify(extra.playerHighManoftheMatchPerSeason(matches)) + '\n', (err) => {
-                if (err) {
-                    console.error("Opoops ! Something went wrong");
-                }
-                else {
-                    console.error('playerHighManoftheMatchPerSeason.json is created successfully.');
-                }
-            });
             csv().fromFile(deliveriesFilePath)
                 .then((deliveries) => {
+                    // /* Writing the number of matches played per year matchesPerYear.json file
+
+                    // Example Output:
+                    //     {
+                    //     "year": number of matches played,
+                    //     "2009": 57,
+                    //     "2010": 60,
+                    //     "2011": 73
+                    // }
+
+                    // */
+                    fs.writeFile(pwd + '/src/output/matchesPerYear.json', JSON.stringify(ipl.matchesPerYear(matches)) + '\n', (err) => {
+                        if (err) {
+                            console.error("Opoops ! Something went wrong");
+                        }
+                        else {
+                            console.error('matchesPerYear.json is created successfully.');
+                        }
+                    });
+                    /* Writing the number of matches played per team per year matchesPerTeamPerYear.json file
+
+                     Example Output:
+                         {
+                         "Team 12": {
+                             "Pune Warriors": {
+                                 "2011": 4,
+                                 "2012": 4,
+                                 "2013": 4
+                             }
+                         },
+                         "Team 13": {
+                             "Kochi Tuskers Kerala": {
+                                 "2011": 6
+                             }
+                         },
+                         "Team 14": {
+                             "Rising Pune Supergiants": {
+                                 "2016": 5
+                             }
+                         }
+                     }
+
+                     */
+                    fs.writeFile(pwd + '/src/output/matchesPerTeamPerYear.json', JSON.stringify(ipl.matchesPerTeamPerYear(matches)) + '\n', (err) => {
+                        if (err) {
+                            console.error("Opoops ! Something went wrong");
+                        }
+                        else {
+                            console.error('matchesPerTeamPerYear.json is created successfully.');
+                        }
+                    });
+                    // /* Writing the number of times each team won the toss and won the match too, wonTossWonMatchPerTeam.json file
+
+                    // Example Output:
+                    //     {
+                    //         "Team Name": numbersofWintosswinmatch
+                    //     "Rising Pune Supergiant": 5,
+                    //     "Kolkata Knight Riders": 44,
+                    //     "Kings XI Punjab": 28,
+                    //     "Royal Challengers Bangalore": 35
+                    // }
+
+                    // */
+                    fs.writeFile(pwd + '/src/output/wonTossWonMatchPerTeam.json', JSON.stringify(extra.wonTossWonMatchPerTeam(matches)) + '\n', (err) => {
+                        if (err) {
+                            console.error(err);
+                        }
+                        else {
+                            console.error('wonTossWonMatchPerTeam.json is created successfully.');
+                        }
+                    });
+                    /* Writing the player per season who has won the highest number of player of the match in that season, playerHighManoftheMatchPerSeason.json file
+
+                     Example Output:
+                         {
+                         "year": {
+                             "player name": number of player of the match won
+                         },
+                         "2009": {
+                             "YK Pathan": 3
+                         },
+                         "2010": {
+                             "SR Tendulkar": 4
+                         }
+                     }
+                    */
+                    fs.writeFile(pwd + '/src/output/playerHighManoftheMatchPerSeason.json', JSON.stringify(extra.playerHighManoftheMatchPerSeason(matches)) + '\n', (err) => {
+                        if (err) {
+                            console.error("Opoops ! Something went wrong");
+                        }
+                        else {
+                            console.error('playerHighManoftheMatchPerSeason.json is created successfully.');
+                        }
+                    });
                     /* Writing the most economical bowler in super overs, mostEconomicalBowlerSuperOver.json file
 
                         Example Output:
@@ -219,7 +219,7 @@ let writeOutputs = () => {
                             console.error('maxNumberofTimesofDissmissal.json is created successfully.');
                         }
                     });
-
+                    console.timeEnd();
                 })
                 .catch(err => console.error("Ooops something went wrong ... Unable to find the deliveries csv file"));
         }).catch(err => console.error("Ooops something went wrong ... Unable to find the matches csv file"));
