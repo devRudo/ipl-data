@@ -14,7 +14,7 @@ const server = http.createServer((request, response) => {
             response.setHeader('Content-Type', 'application/json');
             fs.readFile(outputpath + 'matchesPerYear.json', 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    response.end("No data found !");
                 }
                 else {
                     response.write(data);
@@ -26,7 +26,7 @@ const server = http.createServer((request, response) => {
             response.setHeader('Content-Type', 'application/json');
             fs.readFile(outputpath + 'matchesPerTeamPerYear.json', 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    response.end("no data found!");
                 }
                 else {
                     response.write(data);
@@ -38,7 +38,7 @@ const server = http.createServer((request, response) => {
             response.setHeader('Content-Type', 'application/json');
             fs.readFile(outputpath + 'wonTossWonMatchPerTeam.json', 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    response.end("no data found");
                 }
                 else {
                     response.write(data);
@@ -50,7 +50,7 @@ const server = http.createServer((request, response) => {
             response.setHeader('Content-Type', 'application/json');
             fs.readFile(outputpath + 'playerHighManoftheMatchPerSeason.json', 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    response.end("no data found");
                 }
                 else {
                     response.write(data);
@@ -62,7 +62,7 @@ const server = http.createServer((request, response) => {
             response.setHeader('Content-Type', 'application/json');
             fs.readFile(outputpath + 'mostEconomicalBowlerSuperOver.json', 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    response.end("No data found !");
                 }
                 else {
                     response.write(data);
@@ -74,7 +74,7 @@ const server = http.createServer((request, response) => {
             response.setHeader('Content-Type', 'application/json');
             fs.readFile(outputpath + 'strikeRateViratPerseason.json', 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    response.end("No data found!");
                 }
                 else {
                     response.write(data);
@@ -86,7 +86,7 @@ const server = http.createServer((request, response) => {
             response.setHeader('Content-Type', 'application/json');
             fs.readFile(outputpath + 'extraRunsPerTeam.json', 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    response.end("No data found!");
                 }
                 else {
                     response.write(data);
@@ -98,7 +98,7 @@ const server = http.createServer((request, response) => {
             response.setHeader('Content-Type', 'application/json');
             fs.readFile(outputpath + 'topEconomicalBowlers.json', 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    response.end("No data found!");
                 }
                 else {
                     response.write(data);
@@ -110,7 +110,7 @@ const server = http.createServer((request, response) => {
             response.setHeader('Content-Type', 'application/json');
             fs.readFile(outputpath + 'maxNumberofTimesofDissmissal.json', 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    response.end("No data found!");
                 }
                 else {
                     response.write(data);
@@ -122,7 +122,7 @@ const server = http.createServer((request, response) => {
             response.setHeader('Content-Type', 'text/html');
             fs.readFile(cwd + '/src/server/public/index.html', 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    response.end("No data found!");
                 }
                 else {
                     response.write(data);

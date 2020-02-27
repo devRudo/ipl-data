@@ -24,9 +24,10 @@ Extra Deliverables:
 4. Highest number of times one player has been dismissed by another player.
 5. Bowler with the best economy in super overs.
 
-After that you get the output on console as following:
+After that json files can be viewed on browsers by running following command:
 
->Server is running on at http://127.0.0.1:3000/
+> $ npm run serve\
+> Server is running on at http://127.0.0.1:3000/
 
 Go to the link http://127.0.0.1:3000/ to acceess the json ouputs in your browser
 
