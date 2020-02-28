@@ -8,7 +8,6 @@ const cwd = process.cwd();
 const outputpath = path.join(cwd + '/src/output/');
 const server = http.createServer((request, response) => {
     const route = request.url;
-    // console.log(route.split('/')[1]);
     switch (route) {
         case '/matches-per-year':
             response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });

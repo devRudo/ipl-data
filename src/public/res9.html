@@ -10,52 +10,7 @@
 <body>
     <div id="container" style="width: 50%;"></div>
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let xhr = new XMLHttpRequest();
-            xhr.open('GET', 'http://localhost:3000/max-numberoftimes-dissmissal');
-            xhr.send();
-            xhr.onload = () => {
-                if (xhr.status != 200) {
-                    alert(`Error ${xhr.status}: ${xhr.statusText}`);
-                } else {
-                    let obj = (JSON.parse(xhr.responseText));
-                    let jsonArr = [];
-                    let teams = [];
-                    for (let elem of obj) {
-                        jsonArr.push([Object.keys(elem)[0], Object.values(elem)[0]]);
-                        teams.push(Object.keys(elem)[0]);
-                    }
-                    Highcharts.chart('container', {
-                        chart: {
-                            type: 'column'
-                        },
-                        title: {
-                            text: 'Economy of Bowlers in all IPL Matches'
-                        },
-
-                        xAxis: {
-                            title: {
-                                text: 'Bowlers'
-                            },
-                            categories: teams
-                        },
-                        yAxis: {
-                            title: {
-                                text: 'Economy'
-                            },
-                            tickInterval: 1
-                        },
-                        series: [{ showInLegend: false, data: jsonArr }]
-                    });
-                }
-            };
-            xhr.onerror = () => {
-                alert("Request failed");
-            };
-
-        });
-    </script>
+    <script src="./main.js"></script>
 </body>
 
 </html>
