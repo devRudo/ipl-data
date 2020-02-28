@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matches per year</title>
+</head>
+
+<body>
+    <div id="container" style="width: 50%;"></div>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:3000/strike-rate-virat-kohli-per-season');
+            xhr.send();
+            xhr.onload = () => {
+                if (xhr.status != 200) {
+                    alert(`Error ${xhr.status}: ${xhr.statusText}`);
+                } else {
+                    let obj = JSON.parse(xhr.responseText);
+                    let years = Object.keys(obj);
+                    let jsonArr = [];
+                    for (key in obj) {
+                        jsonArr.push([Number(key), obj[key]]);
+                    }
+                    // console.log(jsonArr);
+                    Highcharts.chart('container', {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Strike Rate of Virat Kohli Per Season'
+                        },
+
+                        xAxis: {
+                            categories: years
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Strike Rate'
+                            },
+                            tickInterval: 10
+                        },
+                        series: [{ showInLegend: false, data: jsonArr }]
+                    });
+                }
+            };
+            xhr.onerror = () => {
+                alert("Request failed");
+            };
+
+        });
+    </script>
+</body>
+
+</html>

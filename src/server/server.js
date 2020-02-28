@@ -7,11 +7,11 @@ const cwd = process.cwd();
 
 const outputpath = path.join(cwd + '/src/output/');
 const server = http.createServer((request, response) => {
-    response.statusCode = 200;
     const route = request.url;
+    // console.log(route.split('/')[1]);
     switch (route) {
         case '/matches-per-year':
-            response.setHeader('Content-Type', 'application/json');
+            response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
             fs.readFile(outputpath + 'matchesPerYear.json', 'utf8', (err, data) => {
                 if (err) {
                     response.end("No data found !");
@@ -23,7 +23,7 @@ const server = http.createServer((request, response) => {
             });
             break;
         case '/matches-per-team-per-year':
-            response.setHeader('Content-Type', 'application/json');
+            response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
             fs.readFile(outputpath + 'matchesPerTeamPerYear.json', 'utf8', (err, data) => {
                 if (err) {
                     response.end("no data found!");
@@ -35,7 +35,7 @@ const server = http.createServer((request, response) => {
             });
             break;
         case '/won-toss-won-match-per-team':
-            response.setHeader('Content-Type', 'application/json');
+            response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
             fs.readFile(outputpath + 'wonTossWonMatchPerTeam.json', 'utf8', (err, data) => {
                 if (err) {
                     response.end("no data found");
@@ -47,7 +47,7 @@ const server = http.createServer((request, response) => {
             });
             break;
         case '/player-highest-manofthematch-per-season':
-            response.setHeader('Content-Type', 'application/json');
+            response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
             fs.readFile(outputpath + 'playerHighManoftheMatchPerSeason.json', 'utf8', (err, data) => {
                 if (err) {
                     response.end("no data found");
@@ -59,7 +59,7 @@ const server = http.createServer((request, response) => {
             });
             break;
         case '/most-economical-bowlers-in-super-overs':
-            response.setHeader('Content-Type', 'application/json');
+            response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
             fs.readFile(outputpath + 'mostEconomicalBowlerSuperOver.json', 'utf8', (err, data) => {
                 if (err) {
                     response.end("No data found !");
@@ -71,7 +71,7 @@ const server = http.createServer((request, response) => {
             });
             break;
         case '/strike-rate-virat-kohli-per-season':
-            response.setHeader('Content-Type', 'application/json');
+            response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
             fs.readFile(outputpath + 'strikeRateViratPerseason.json', 'utf8', (err, data) => {
                 if (err) {
                     response.end("No data found!");
@@ -83,7 +83,7 @@ const server = http.createServer((request, response) => {
             });
             break;
         case '/extra-runs-per-team':
-            response.setHeader('Content-Type', 'application/json');
+            response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
             fs.readFile(outputpath + 'extraRunsPerTeam.json', 'utf8', (err, data) => {
                 if (err) {
                     response.end("No data found!");
@@ -95,7 +95,7 @@ const server = http.createServer((request, response) => {
             });
             break;
         case '/top-economical-bowlers':
-            response.setHeader('Content-Type', 'application/json');
+            response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
             fs.readFile(outputpath + 'topEconomicalBowlers.json', 'utf8', (err, data) => {
                 if (err) {
                     response.end("No data found!");
@@ -107,7 +107,7 @@ const server = http.createServer((request, response) => {
             });
             break;
         case '/max-numberoftimes-dissmissal':
-            response.setHeader('Content-Type', 'application/json');
+            response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
             fs.readFile(outputpath + 'maxNumberofTimesofDissmissal.json', 'utf8', (err, data) => {
                 if (err) {
                     response.end("No data found!");
@@ -118,9 +118,10 @@ const server = http.createServer((request, response) => {
                 }
             });
             break;
-        default:
-            response.setHeader('Content-Type', 'text/html');
-            fs.readFile(cwd + '/src/server/public/index.html', 'utf8', (err, data) => {
+        case '/':
+        case '/index.html':
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.readFile(cwd + '/src/public/index.html', 'utf8', (err, data) => {
                 if (err) {
                     response.end("No data found!");
                 }
@@ -130,10 +131,134 @@ const server = http.createServer((request, response) => {
                 }
             });
             break;
+        case '/main.js':
+            response.writeHead(200, { 'Content-Type': 'application/javascript' });
+            fs.readFile(cwd + '/src/public/main.js', 'utf8', (err, data) => {
+                if (err) {
+                    response.end("No data found!");
+                }
+                else {
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
+        case '/result1':
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.readFile(cwd + '/src/public/res1.html', 'utf8', (err, data) => {
+                if (err) {
+                    response.end("No data found!");
+                }
+                else {
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
+        case '/result2':
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.readFile(cwd + '/src/public/res2.html', 'utf8', (err, data) => {
+                if (err) {
+                    response.end("No data found!");
+                }
+                else {
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
+        case '/result3':
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.readFile(cwd + '/src/public/res3.html', 'utf8', (err, data) => {
+                if (err) {
+                    response.end("No data found!");
+                }
+                else {
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
+        case '/result4':
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.readFile(cwd + '/src/public/res4.html', 'utf8', (err, data) => {
+                if (err) {
+                    response.end("No data found!");
+                }
+                else {
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
+        case '/result5':
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.readFile(cwd + '/src/public/res5.html', 'utf8', (err, data) => {
+                if (err) {
+                    response.end("No data found!");
+                }
+                else {
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
+        case '/result6':
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.readFile(cwd + '/src/public/res6.html', 'utf8', (err, data) => {
+                if (err) {
+                    response.end("No data found!");
+                }
+                else {
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
+        case '/result7':
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.readFile(cwd + '/src/public/res7.html', 'utf8', (err, data) => {
+                if (err) {
+                    response.end("No data found!");
+                }
+                else {
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
+        case '/result8':
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.readFile(cwd + '/src/public/res8.html', 'utf8', (err, data) => {
+                if (err) {
+                    response.end("No data found!");
+                }
+                else {
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
+        case '/result9':
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            fs.readFile(cwd + '/src/public/res9.html', 'utf8', (err, data) => {
+                if (err) {
+                    response.end("No data found!");
+                }
+                else {
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
+        default:
+            response.writeHead(404, "Page not found", { 'Content-Type': 'text/plain' });
+            response.write(response.statusMessage);
+            response.end();
     }
 
 });
 
 server.listen(port, localhost, () => {
-    console.log(`Server is running on at http://${localhost}:${port}/`);
+    console.log(`Server is running at http://${localhost}:${port}/`);
 });

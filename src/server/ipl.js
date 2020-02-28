@@ -11,27 +11,28 @@ module.exports.matchesPerYear = (matches) => {
 }
 
 module.exports.matchesPerTeamPerYear = (matches) => {
-    let winnerTeams = Array.from(new Set(matches.map(match => match.winner).filter((match, index, matches) => match !== "")));
-    let finalObj = {};
-    for (let i = 0; i < winnerTeams.length; i++) {
-        let currentTeamObj = matches.reduce((acc, curr) => {
-            if (curr.winner === winnerTeams[i]) {
-                if (acc[curr.season] === undefined) {
-                    acc[curr.season] = 1;
-                }
-                else {
-                    acc[curr.season]++;
+    let years = Array.from(new Set(matches.map(match => match.season).filter((year, index, years) => year !== ""))).sort();
+    let seasonArr = [];
+    for (let i = 0; i < years.length; i++) {
+        let currentSeasonObj = matches.reduce((acc, curr) => {
+            if (curr.season === years[i]) {
+                if (curr.winner !== '') {
+                    if (acc[curr.winner] === undefined) {
+                        acc[curr.winner] = 1;
+                    }
+                    else {
+                        acc[curr.winner]++;
+                    }
                 }
             }
             return acc;
         }, {});
         let team = {};
-        team[winnerTeams[i]] = currentTeamObj;
+        team[years[i]] = currentSeasonObj;
         let winnerobj = team;
-        index = i + 1;
-        finalObj['Team ' + index] = winnerobj;
+        seasonArr.push(winnerobj);
     }
-    return finalObj;
+    return seasonArr;
 }
 
 module.exports.extraRunsPerTeam = (matches, deliveries, year) => {

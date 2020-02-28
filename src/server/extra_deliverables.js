@@ -12,7 +12,7 @@ module.exports.wonTossWonMatchPerTeam = (matches) => {
 
 module.exports.playerHighManoftheMatchPerSeason = (matches) => {
     let years = matches.map(match => match.season).filter((match, index, matches) => matches.indexOf(match) === index);
-    let playersObj = {};
+    let playersArr = [];
     for (let i = 0; i < years.length; i++) {
         let players = matches.filter(match => match.season === years[i]).map(match => match.player_of_match).reduce((acc, curr) => {
             if (acc[curr] === undefined) {
@@ -30,13 +30,16 @@ module.exports.playerHighManoftheMatchPerSeason = (matches) => {
         let highestCount = Math.max(...manoftheMatchCount);
         let player = {};
         for (key in players) {
+            let obj = {};
             if (players[key] == highestCount) {
-                player[key] = highestCount;
+                obj[key] = highestCount;
+                player[years[i]] = obj;
             }
         }
-        playersObj[years[i]] = player;
+        playersArr.push(player);
     }
-    return playersObj;
+
+    return playersArr.sort((a, b) => Object.keys(a)[0] - Object.keys(b)[0]);
 }
 
 module.exports.strikeRateViratPerseason = (matches, deliveries) => {
@@ -75,31 +78,34 @@ module.exports.playerDissmisal = (deliveries) => {
     }, {});
     let dissmissalArray = [];
     for (key in obj) {
-        dissmissalArray.push(obj[key]);
+        let dismissalObj = {};
+        dismissalObj[key] = obj[key];
+        dissmissalArray.push(dismissalObj);
     }
-    let maxCount = Math.max(...dissmissalArray);
-    let result = {};
-    for (key in obj) {
-        if (obj[key] == maxCount) {
-            result[key] = maxCount;
-        }
-    }
-    let res = [];
-    for (key in result) {
-        let batsman = key.split(",")[0];
-        let bowler = key.split(",")[1];
-        res.push(batsman + " Dismissed by " + bowler + " " + result[key] + " times");
+    return dissmissalArray.sort((a, b) => Object.values(b)[0] - Object.values(a)[0]).slice(0, 10);
+    // let maxCount = Math.max(...dissmissalArray);
+    // let result = {};
+    // for (key in obj) {
+    //     if (obj[key] == maxCount) {
+    //         result[key] = maxCount;
+    //     }
+    // }
+    // let res = [];
+    // for (key in result) {
+    //     let batsman = key.split(",")[0];
+    //     let bowler = key.split(",")[1];
+    //     res.push(batsman + " Dismissed by " + bowler + " " + result[key] + " times");
 
-    }
-    return res;
+    // }
 
 }
 
 module.exports.bowlerWithBestEconomyInSuperOvers = (deliveries) => {
     let superOverDeliveries = deliveries.filter(delivery => delivery.is_super_over != 0);
     let uniqueBowlersSuperOvers = superOverDeliveries.map(delivery => delivery.bowler).filter((elem, index, arr) => arr.indexOf(elem) == index);
-    let superOverObj = {};
+    let outputArr = [];
     for (let i = 0; i < uniqueBowlersSuperOvers.length; i++) {
+        let superOverObj = {};
         let totalDeliveries = superOverDeliveries.filter(elem => elem.bowler == uniqueBowlersSuperOvers[i]).filter(elem => elem.wide_runs == 0 && elem.noball_runs == 0).length;
         let totalOvers = (totalDeliveries / 6).toFixed(2);
         let totalRuns = superOverDeliveries.filter(elem => elem.bowler == uniqueBowlersSuperOvers[i]).map(elem => [elem.total_runs, elem.legbye_runs, elem.bye_runs]).reduce((acc, curr) => {
@@ -116,16 +122,15 @@ module.exports.bowlerWithBestEconomyInSuperOvers = (deliveries) => {
             return acc;
         }, 0);
         let economy = (totalRuns / totalOvers).toFixed(2);
-        superOverObj[uniqueBowlersSuperOvers[i]] = economy;
+        superOverObj[uniqueBowlersSuperOvers[i]] = Number(economy);
+        outputArr.push(superOverObj);
     }
-    let countArr2 = [];
-    for (key in superOverObj) {
-        countArr2.push((superOverObj[key]));
-    }
-    let minEconomy = Math.min(...countArr2);
-    for (let key in superOverObj) {
-        if (superOverObj[key] == minEconomy) {
-            return key + " is most economical bowlers in super overs";
-        }
-    }
+
+    return outputArr;
+    // let minEconomy = Math.min(...countArr2);
+    // for (let key in superOverObj) {
+    //     if (superOverObj[key] == minEconomy) {
+    //         return key + " is most economical bowlers in super overs";
+    //     }
+    // }
 }

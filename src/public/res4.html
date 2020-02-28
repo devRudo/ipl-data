@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matches per year</title>
+</head>
+
+<body>
+    <div id="container" style="width: 50%;"></div>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:3000/player-highest-manofthematch-per-season');
+            xhr.send();
+            xhr.onload = () => {
+                if (xhr.status != 200) {
+                    alert(`Error ${xhr.status}: ${xhr.statusText}`);
+                } else {
+                    var options = {
+                        chart: {
+                            type: 'column'
+                        },
+                        title: {
+                            text: 'Matches Played per Team per Year'
+                        },
+                        xAxis: {
+                            title: 'Years'
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Matches Played'
+                            },
+                            tickInterval: 1
+                        },
+                        plotOptions: {
+                            column: {
+                                pointPadding: 0.2,
+                                borderWidth: 0
+                            }
+                        }
+                    }
+                    let obj = JSON.parse(xhr.responseText);
+                    let years = [];
+                    let players = [];
+                    let countArr = [];
+                    for (let elem of obj) {
+                        years.push(Object.keys(elem)[0]);
+                        players.push(...Object.keys(Object.values(elem)[0]));
+                        countArr.push(Object.values(elem)[0]);
+                    }
+                    console.log(years);
+                    players = Array.from(new Set(players));
+                    options.xAxis.categories = years;
+                    let series = [];
+                    for (let elem of players) {
+                        let dataObj = {};
+                        let arr = [];
+                        for (let wins of countArr) {
+                            if (wins.hasOwnProperty(elem)) {
+                                arr.push(wins[elem]);
+                            }
+                            else {
+                                arr.push(0);
+                            }
+                        }
+                        dataObj.name = elem;
+                        dataObj.data = arr;
+                        series.push(dataObj);
+                    }
+                    options.series = series;
+                    Highcharts.chart('container', options);
+                }
+            };
+            xhr.onerror = () => {
+                alert("Request failed");
+            };
+
+        });
+    </script>
+</body>
+
+</html>
