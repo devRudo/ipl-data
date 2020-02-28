@@ -3,9 +3,13 @@
 To run this project you need to have node js installed in your system so install it :
 
 ## After installing node js in your system just clone this project into your system and then run the project by running following command in your cloned directory
+To install all the required packeges:
 
 > $ npm install\
-> $ npm run start
+
+To generate the output in the output folder
+
+> $ npm start\
 
 ## Then go to the folder Output inside src to view the outputs
 
@@ -24,12 +28,12 @@ Extra Deliverables:
 4. Highest number of times one player has been dismissed by another player.
 5. Bowler with the best economy in super overs.
 
-After that json files can be viewed on browsers by running following command:
+After that json files and the respective charts can be viewed on browsers by running following command:
 
 > $ npm run serve\
 > Server is running on at http://127.0.0.1:3000/
 
-Go to the link http://127.0.0.1:3000/ to acceess the json ouputs in your browser
+Go to the link http://127.0.0.1:3000/ to acceess the json ouputs and charts in your browser
 
 Outputs are provided as different route points as follows:
 1. http://127.0.0.1:3000/matches-per-year
@@ -41,3 +45,14 @@ Outputs are provided as different route points as follows:
 7. http://127.0.0.1:3000/extra-runs-per-team
 8. http://127.0.0.1:3000/top-economical-bowlers
 9. http://127.0.0.1:3000/max-numberoftimes-dissmissal
+
+Charts are also provided at different routes as follows:
+1. http://127.0.0.1:3000/result1
+2. http://127.0.0.1:3000//result2
+3. http://127.0.0.1:3000//result3
+4. http://127.0.0.1:3000//result4
+5. http://127.0.0.1:3000//result5
+6. http://127.0.0.1:3000//result6
+7. http://127.0.0.1:3000//result7
+8. http://127.0.0.1:3000//result8
+9. http://127.0.0.1:3000//result9
