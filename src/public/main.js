@@ -1,20 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
     let pointtojson = window.location.pathname.split('/')[1];
+    let xhr = new XMLHttpRequest();
     if (pointtojson === 'result1') {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/matches-per-year');
+        xhr.open('GET', 'http://localhost:5000/matches-per-year');
         xhr.send();
         xhr.onload = () => {
             if (xhr.status != 200) {
                 alert(`Error ${xhr.status}: ${xhr.statusText}`);
             } else {
+                // console.log(typeof xhr.responseText);
                 let obj = JSON.parse(xhr.responseText);
                 let years = Object.keys(obj);
                 let jsonArr = [];
                 for (key in obj) {
                     jsonArr.push([Number(key), obj[key]]);
                 }
-                Highcharts.chart('container', {
+                var options = {
                     chart: {
                         type: 'column'
                     },
@@ -23,17 +24,51 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                     xAxis: {
                         title: {
-                            text: 'Years'
+                            text: 'Years',
+                            style: {
+                                fontSize: '14px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '14px'
+                            }
                         }
                     },
                     yAxis: {
                         title: {
-                            text: 'Matches played'
+                            text: 'Matches played',
+                            style: {
+                                fontSize: '14px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '14px'
+                            }
                         },
                         tickInterval: 1
                     },
-                    series: [{ showInLegend: false, data: jsonArr }]
-                });
+                    tooltip: {
+                        pointFormat: 'Matches Played in {point.x}: <b>{point.y}</b>'
+                    },
+                    series: [{
+                        showInLegend: false,
+                        colorByPoint: true,
+                        data: jsonArr,
+                        dataLabels: {
+                            enabled: true,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y}',
+                            y: 30,
+                            style: {
+                                fontSize: '16px'
+                            }
+                        }
+                    }]
+                };
+                Highcharts.chart('container', options);
             }
         };
         xhr.onerror = () => {
@@ -41,8 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     else if (pointtojson === 'result2') {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/matches-per-team-per-year');
+        xhr.open('GET', 'http://localhost:5000/matches-per-team-per-year');
         xhr.send();
         xhr.onload = () => {
             if (xhr.status != 200) {
@@ -53,18 +87,44 @@ document.addEventListener('DOMContentLoaded', () => {
                         type: 'column'
                     },
                     title: {
-                        text: 'Matches Played per Team per Year'
+                        text: 'Matches Won per Team per Year',
+                        style: {
+                            fontSize: '20px'
+                        }
                     },
                     xAxis: {
                         title: {
-                            text: 'Years'
+                            text: 'Years',
+                            style: {
+                                fontSize: '20px'
+                            }
                         },
+                        labels: {
+                            style: {
+                                fontSize: '14px'
+                            }
+                        }
                     },
                     yAxis: {
                         title: {
-                            text: 'Matches Played'
+                            text: 'Matches Won',
+                            style: {
+                                fontSize: '20px'
+                            }
+                        }, labels: {
+                            style: {
+                                fontSize: '14px'
+                            }
                         },
                         tickInterval: 1
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
                     },
                     plotOptions: {
                         column: {
@@ -110,8 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     else if (pointtojson === 'result3') {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/won-toss-won-match-per-team');
+        xhr.open('GET', 'http://localhost:5000/won-toss-won-match-per-team');
         xhr.send();
         xhr.onload = () => {
             if (xhr.status != 200) {
@@ -131,22 +190,58 @@ document.addEventListener('DOMContentLoaded', () => {
                         type: 'column'
                     },
                     title: {
-                        text: 'Won Toss Won Match Per Team'
+                        text: 'Won Toss Won Match Per Team',
+                        style: {
+                            fontSize: '20px'
+                        }
                     },
 
                     xAxis: {
                         title: {
-                            text: 'Teams'
+                            text: 'Teams',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         categories: teams
                     },
                     yAxis: {
                         title: {
-                            text: 'Won Toss Won Match Count'
+                            text: 'Won Toss Won Match Count',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         tickInterval: 5
                     },
-                    series: [{ showInLegend: false, data: jsonArr }]
+                    tooltip: {
+                        pointFormat: 'Won toss won match : <b>{point.y}</b>'
+                    },
+                    series: [{
+                        showInLegend: false,
+                        colorByPoint: true,
+                        data: jsonArr,
+                        dataLabels: {
+                            enabled: true,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y}',
+                            y: 30,
+                            style: {
+                                fontSize: '16px'
+                            }
+                        }
+                    }]
                 });
             }
         };
@@ -155,8 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     else if (pointtojson === 'result4') {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/player-highest-manofthematch-per-season');
+        xhr.open('GET', 'http://localhost:5000/player-highest-manofthematch-per-season');
         xhr.send();
         xhr.onload = () => {
             if (xhr.status != 200) {
@@ -167,14 +261,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         type: 'column'
                     },
                     title: {
-                        text: 'Matches Played per Team per Year'
+                        text: 'Highest Man of the Match getting player per year',
+                        style: {
+                            fontSize: '20px'
+                        }
                     },
                     xAxis: {
-                        title: 'Years'
+                        title: {
+                            text: 'Years',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        }
                     },
                     yAxis: {
                         title: {
-                            text: 'Matches Played'
+                            text: 'Matches Played',
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         tickInterval: 1
                     },
@@ -222,8 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     else if (pointtojson === 'result5') {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/most-economical-bowlers-in-super-overs');
+        xhr.open('GET', 'http://localhost:5000/most-economical-bowlers-in-super-overs');
         xhr.send();
         xhr.onload = () => {
             if (xhr.status != 200) {
@@ -241,22 +345,58 @@ document.addEventListener('DOMContentLoaded', () => {
                         type: 'column'
                     },
                     title: {
-                        text: 'Economy of Bowlers in Super Overs'
+                        text: 'Economy of Bowlers in Super Overs',
+                        style: {
+                            fontSize: '20px'
+                        }
                     },
 
                     xAxis: {
                         title: {
-                            text: 'Bowlers'
+                            text: 'Bowlers',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         categories: teams
                     },
                     yAxis: {
                         title: {
-                            text: 'Economy'
+                            text: 'Economy',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         tickInterval: 1
                     },
-                    series: [{ showInLegend: false, data: jsonArr }]
+                    tooltip: {
+                        pointFormat: 'Economy of <b>{point.name}</b> in super overs: <b>{point.y}</b>'
+                    },
+                    series: [{
+                        showInLegend: false,
+                        colorByPoint: true,
+                        data: jsonArr,
+                        dataLabels: {
+                            enabled: true,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y}',
+                            y: 30,
+                            style: {
+                                fontSize: '16px'
+                            }
+                        }
+                    }]
                 });
             }
         };
@@ -265,8 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     else if (pointtojson === 'result6') {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/strike-rate-virat-kohli-per-season');
+        xhr.open('GET', 'http://localhost:5000/strike-rate-virat-kohli-per-season');
         xhr.send();
         xhr.onload = () => {
             if (xhr.status != 200) {
@@ -278,25 +417,63 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (key in obj) {
                     jsonArr.push([Number(key), obj[key]]);
                 }
-                // console.log(jsonArr);
                 Highcharts.chart('container', {
                     chart: {
                         type: 'column'
                     },
                     title: {
-                        text: 'Strike Rate of Virat Kohli Per Season'
+                        text: 'Strike Rate of Virat Kohli Per Season',
+                        style: {
+                            fontSize: '20px'
+                        }
                     },
 
                     xAxis: {
+                        title: {
+                            text: 'Years',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
                         categories: years
                     },
                     yAxis: {
                         title: {
-                            text: 'Strike Rate'
+                            text: 'Strike Rate',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         tickInterval: 10
                     },
-                    series: [{ showInLegend: false, data: jsonArr }]
+                    tooltip: {
+                        pointFormat: 'Strike Rate in <b>{point.x}</b>: <b>{point.y}</b>'
+                    },
+                    series: [{
+                        showInLegend: false,
+                        colorByPoint: true,
+                        data: jsonArr,
+                        dataLabels: {
+                            enabled: true,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y}',
+                            y: 30,
+                            style: {
+                                fontSize: '16px'
+                            }
+                        }
+                    }]
                 });
             }
         };
@@ -305,8 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     else if (pointtojson === 'result7') {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/extra-runs-per-team');
+        xhr.open('GET', 'http://localhost:5000/extra-runs-per-team');
         xhr.send();
         xhr.onload = () => {
             if (xhr.status != 200) {
@@ -324,19 +500,57 @@ document.addEventListener('DOMContentLoaded', () => {
                         type: 'column'
                     },
                     title: {
-                        text: 'Extra Runs Conceded Per Team'
+                        text: 'Extra Runs Conceded Per Team in all the season',
+                        style: {
+                            fontSize: '20px'
+                        }
                     },
-
                     xAxis: {
+                        title: {
+                            text: 'Teams',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
                         categories: teams
                     },
                     yAxis: {
                         title: {
-                            text: 'Extra Runs'
+                            text: 'Extra Runs',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         tickInterval: 5
                     },
-                    series: [{ showInLegend: false, data: jsonArr }]
+                    tooltip: {
+                        pointFormat: 'Extra Runs given :<b>{point.y}</b>'
+                    },
+                    series: [{
+                        showInLegend: false,
+                        colorByPoint: true,
+                        data: jsonArr,
+                        dataLabels: {
+                            enabled: true,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y}',
+                            y: 30,
+                            style: {
+                                fontSize: '16px'
+                            }
+                        }
+                    }]
                 });
             }
         };
@@ -345,8 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     else if (pointtojson === 'result8') {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/top-economical-bowlers');
+        xhr.open('GET', 'http://localhost:5000/top-economical-bowlers');
         xhr.send();
         xhr.onload = () => {
             if (xhr.status != 200) {
@@ -364,22 +577,57 @@ document.addEventListener('DOMContentLoaded', () => {
                         type: 'column'
                     },
                     title: {
-                        text: 'Economy of Bowlers in all IPL Matches'
+                        text: 'Economy of Bowlers in all IPL Matches',
+                        style: {
+                            fontSize: '20px'
+                        }
                     },
-
                     xAxis: {
                         title: {
-                            text: 'Bowlers'
+                            text: 'Bowlers',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         categories: teams
                     },
                     yAxis: {
                         title: {
-                            text: 'Economy'
+                            text: 'Economy',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         tickInterval: 1
                     },
-                    series: [{ showInLegend: false, data: jsonArr }]
+                    tooltip: {
+                        pointFormat: 'Economy : <b>{point.y}</b>'
+                    },
+                    series: [{
+                        showInLegend: false,
+                        colorByPoint: true,
+                        data: jsonArr,
+                        dataLabels: {
+                            enabled: true,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y}',
+                            y: 30,
+                            style: {
+                                fontSize: '16px'
+                            }
+                        }
+                    }]
                 });
             }
         };
@@ -388,8 +636,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
     else if (pointtojson === 'result9') {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://localhost:3000/max-numberoftimes-dissmissal');
+        xhr.open('GET', 'http://localhost:5000/max-numberoftimes-dissmissal');
         xhr.send();
         xhr.onload = () => {
             if (xhr.status != 200) {
@@ -407,22 +654,57 @@ document.addEventListener('DOMContentLoaded', () => {
                         type: 'column'
                     },
                     title: {
-                        text: 'Economy of Bowlers in all IPL Matches'
+                        text: 'Highest Number of times a player is dissmissed by another player',
+                        style: {
+                            fontSize: '20px'
+                        }
                     },
-
                     xAxis: {
                         title: {
-                            text: 'Bowlers'
+                            text: 'Batsman by Bowler',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         categories: teams
                     },
                     yAxis: {
                         title: {
-                            text: 'Economy'
+                            text: 'Number of times of dissmissal',
+                            style: {
+                                fontSize: '16px'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '16px'
+                            }
                         },
                         tickInterval: 1
                     },
-                    series: [{ showInLegend: false, data: jsonArr }]
+                    tooltip: {
+                        pointFormat: '<b>{point.name}</b>: <b>{point.y}</b>'
+                    },
+                    series: [{
+                        showInLegend: false,
+                        colorByPoint: true,
+                        data: jsonArr,
+                        dataLabels: {
+                            enabled: true,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y}',
+                            y: 30,
+                            style: {
+                                fontSize: '16px'
+                            }
+                        }
+                    }]
                 });
             }
         };
@@ -431,4 +713,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    // For going back and forth
+    document.getElementById('back').addEventListener('click', () => {
+        window.history.back();
+    });
+    document.getElementById('next').addEventListener('click', () => {
+        window.history.forward();
+    });
 });

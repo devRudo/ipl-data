@@ -1,3 +1,12 @@
+/* Returning the number of matches played per year matchesPerYear.json file
+ Example Output:
+     {
+        "year": number of matches played,
+        "2009": 57,
+        "2010": 60,
+        "2011": 73
+      }
+ */
 module.exports.matchesPerYear = (matches) => {
     return matches.reduce((acc, curr) => {
         if (acc[curr.season] == undefined) {
@@ -10,8 +19,29 @@ module.exports.matchesPerYear = (matches) => {
     }, {});
 }
 
+/* Returning the number of matches won per team per year matchesPerTeamPerYear.json file
+ Example Output:
+[
+    {
+        "2008": {
+            "Kolkata Knight Riders": 6,
+            "Chennai Super Kings": 9,
+            "Delhi Daredevils": 7,
+            "Royal Challengers Bangalore": 4
+        }
+    },
+    {
+        "2009": {
+            "Mumbai Indians": 5,
+            "Royal Challengers Bangalore": 9,
+            "Delhi Daredevils": 10
+        }
+    }
+]
+
+ */
 module.exports.matchesPerTeamPerYear = (matches) => {
-    let years = Array.from(new Set(matches.map(match => match.season).filter((year, index, years) => year !== ""))).sort();
+    let years = Array.from(new Set(matches.map(match => match.season).filter((year) => year !== ""))).sort();
     let seasonArr = [];
     for (let i = 0; i < years.length; i++) {
         let currentSeasonObj = matches.reduce((acc, curr) => {
@@ -35,6 +65,20 @@ module.exports.matchesPerTeamPerYear = (matches) => {
     return seasonArr;
 }
 
+/* Returning extra run conceded per team in the given year, extraRunsPerTeam.json file
+Example Output:
+    [
+    {
+        "Team name": extra runs conceded
+    },
+    {
+        "Mumbai Indians": 102
+    },
+    {
+        "Kolkata Knight Riders": 122
+    }
+]
+*/
 module.exports.extraRunsPerTeam = (matches, deliveries, year) => {
     let matchIdsPlayedIn2016 = matches.filter(match => match.season == year).map(match => match.id).reduce((acc, curr) => {
         if (acc[curr] == undefined) {
@@ -57,6 +101,17 @@ module.exports.extraRunsPerTeam = (matches, deliveries, year) => {
     return teams;
 
 }
+/* Returning top economical bowlers in the given year, topEconomicalBowlers.json file
+Example Output:
+[
+    {
+        "Bowler name": economy,
+        "RN ten Doeschate": 4,
+        "J Yadav": 4.14,
+        "V Kohli": 5.46
+    }
+]
+*/
 
 module.exports.topEconomicalBowlers = (matches, deliveries, year) => {
     let matchIdsPlayedIn2015 = matches.filter(match => match.season == year).map(match => match.id).reduce((acc, curr) => {

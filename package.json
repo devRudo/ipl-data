@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/server/index.js",
-    "serve": "nodemon  ./src/server/server.js"
+    "api-serve": "nodemon  ./src/server/api.js",
+    "web-serve": "nodemon ./src/server/server.js"
   },
   "repository": {
     "type": "git",

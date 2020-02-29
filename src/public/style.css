@@ -1,0 +1,17 @@
+.navigation-btns{
+    text-align: center;
+}
+#back{
+    background-color: teal;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+}
+#next{
+    background-color: teal;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+}

@@ -1,3 +1,16 @@
+// /* Writing the number of times each team won the toss and won the match too, wonTossWonMatchPerTeam.json file
+
+// Example Output:
+//     {
+//         "Team Name": numbersofWintosswinmatch
+//     "Rising Pune Supergiant": 5,
+//     "Kolkata Knight Riders": 44,
+//     "Kings XI Punjab": 28,
+//     "Royal Challengers Bangalore": 35
+// }
+
+// */
+
 module.exports.wonTossWonMatchPerTeam = (matches) => {
     return matches.filter(match => match.toss_winner == match.winner).reduce((acc, curr) => {
         if (acc[curr.winner] === undefined) {
@@ -9,7 +22,21 @@ module.exports.wonTossWonMatchPerTeam = (matches) => {
         return acc;
     }, {});
 }
+/* Returning the player per season who has won the highest number of player of the match in that season, playerHighManoftheMatchPerSeason.json file
 
+ Example Output:
+     {
+     "year": {
+         "player name": number of player of the match won
+     },
+     "2009": {
+         "YK Pathan": 3
+     },
+     "2010": {
+         "SR Tendulkar": 4
+     }
+ }
+*/
 module.exports.playerHighManoftheMatchPerSeason = (matches) => {
     let years = matches.map(match => match.season).filter((match, index, matches) => matches.indexOf(match) === index);
     let playersArr = [];
@@ -41,7 +68,15 @@ module.exports.playerHighManoftheMatchPerSeason = (matches) => {
 
     return playersArr.sort((a, b) => Object.keys(a)[0] - Object.keys(b)[0]);
 }
-
+/* Writing strike rate of virat kohli per season, strikeRateViratPerseason.json file
+    Example Output:
+    {
+        "Year": strikerate,
+        "2008": 105.1,
+        "2009": 112.33,
+        "2010": 144.81
+    }
+*/
 module.exports.strikeRateViratPerseason = (matches, deliveries) => {
     let years = matches.map(match => match.season).filter((curr, index, arr) => arr.indexOf(curr) === index);
     let ViratKohliDeliveries = deliveries.filter(delivery => delivery.batsman == 'V Kohli');
@@ -65,6 +100,12 @@ module.exports.strikeRateViratPerseason = (matches, deliveries) => {
     }
     return resultobj;
 }
+/* Writing the highest number of times a player is dismissed by another player in all season, maxNumberofTimesofDissmissal.json file
+
+                   Example Output:
+                       [Batsman name dismissed by bowler name n times]
+                       ["MS Dhoni Dismissed by Z Khan 7 times"]
+                   */
 
 module.exports.playerDissmisal = (deliveries) => {
     let obj = deliveries.filter(delivery => delivery.player_dismissed != '' && delivery.dismissal_kind != 'run out').map(delivery => [delivery.player_dismissed, delivery.bowler]).reduce((acc, curr) => {
@@ -83,26 +124,27 @@ module.exports.playerDissmisal = (deliveries) => {
         dissmissalArray.push(dismissalObj);
     }
     return dissmissalArray.sort((a, b) => Object.values(b)[0] - Object.values(a)[0]).slice(0, 10);
-    // let maxCount = Math.max(...dissmissalArray);
-    // let result = {};
-    // for (key in obj) {
-    //     if (obj[key] == maxCount) {
-    //         result[key] = maxCount;
-    //     }
-    // }
-    // let res = [];
-    // for (key in result) {
-    //     let batsman = key.split(",")[0];
-    //     let bowler = key.split(",")[1];
-    //     res.push(batsman + " Dismissed by " + bowler + " " + result[key] + " times");
-
-    // }
-
 }
 
+
+/* Returning the bowlers economies in super overs, mostEconomicalBowlerSuperOver.json file
+
+    Example Output:
+    [
+        {
+            Bowlername: economy
+        },
+        {
+            "JP Faulkner": 11.48
+        },
+        {
+            "JJ Bumrah": 4
+        },
+    ]
+*/
 module.exports.bowlerWithBestEconomyInSuperOvers = (deliveries) => {
     let superOverDeliveries = deliveries.filter(delivery => delivery.is_super_over != 0);
-    let uniqueBowlersSuperOvers = superOverDeliveries.map(delivery => delivery.bowler).filter((elem, index, arr) => arr.indexOf(elem) == index);
+    let uniqueBowlersSuperOvers = Array.from(new Set(superOverDeliveries.map(delivery => delivery.bowler)));
     let outputArr = [];
     for (let i = 0; i < uniqueBowlersSuperOvers.length; i++) {
         let superOverObj = {};
@@ -127,10 +169,4 @@ module.exports.bowlerWithBestEconomyInSuperOvers = (deliveries) => {
     }
 
     return outputArr;
-    // let minEconomy = Math.min(...countArr2);
-    // for (let key in superOverObj) {
-    //     if (superOverObj[key] == minEconomy) {
-    //         return key + " is most economical bowlers in super overs";
-    //     }
-    // }
 }
