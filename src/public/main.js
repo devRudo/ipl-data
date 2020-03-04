@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (xhr.status != 200) {
                 alert(`Error ${xhr.status}: ${xhr.statusText}`);
             } else {
-                // console.log(typeof xhr.responseText);
+                document.getElementById('progressBar').style.display = "none";
+                document.getElementById('container').style.display = "block";
                 let obj = JSON.parse(xhr.responseText);
                 let years = Object.keys(obj);
                 let jsonArr = [];
@@ -70,9 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
                 Highcharts.chart('container', options);
             }
-        };
-        xhr.onerror = () => {
-            alert("Request failed");
         };
     }
     else if (pointtojson === 'result2') {
@@ -165,9 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 Highcharts.chart('container', options);
             }
         };
-        xhr.onerror = () => {
-            alert("Request failed");
-        };
     }
     else if (pointtojson === 'result3') {
         xhr.open('GET', 'http://localhost:5000/won-toss-won-match-per-team');
@@ -245,9 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         };
-        xhr.onerror = () => {
-            alert("Request failed");
-        };
     }
     else if (pointtojson === 'result4') {
         xhr.open('GET', 'http://localhost:5000/player-highest-manofthematch-per-season');
@@ -321,9 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 options.series = series;
                 Highcharts.chart('container', options);
             }
-        };
-        xhr.onerror = () => {
-            alert("Request failed");
         };
     }
     else if (pointtojson === 'result5') {
@@ -400,9 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         };
-        xhr.onerror = () => {
-            alert("Request failed");
-        };
     }
     else if (pointtojson === 'result6') {
         xhr.open('GET', 'http://localhost:5000/strike-rate-virat-kohli-per-season');
@@ -476,9 +462,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }]
                 });
             }
-        };
-        xhr.onerror = () => {
-            alert("Request failed");
         };
     }
     else if (pointtojson === 'result7') {
@@ -554,9 +537,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         };
-        xhr.onerror = () => {
-            alert("Request failed");
-        };
     }
     else if (pointtojson === 'result8') {
         xhr.open('GET', 'http://localhost:5000/top-economical-bowlers');
@@ -630,9 +610,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }]
                 });
             }
-        };
-        xhr.onerror = () => {
-            alert("Request failed");
         };
     }
     else if (pointtojson === 'result9') {
@@ -708,16 +685,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         };
-        xhr.onerror = () => {
-            alert("Request failed");
-        };
     }
-
+    xhr.onprogress = (event) => {
+        document.getElementById('progressBar').style.display = "block";
+        document.body.style.backgroundColor = "#eee";
+    }
+    xhr.onerror = () => {
+        alert("Request failed");
+    };
     // For going back and forth
     document.getElementById('back').addEventListener('click', () => {
         window.history.back();
     });
     document.getElementById('next').addEventListener('click', () => {
         window.history.forward();
+    });
+    document.getElementById('home').addEventListener('click', () => {
+        window.location.href = '/';
     });
 });

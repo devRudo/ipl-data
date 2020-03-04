@@ -48,6 +48,19 @@ const server = http.createServer((request, response) => {
                 }
             });
             break;
+        case '/highcharts-theme.js':
+            fs.readFile(cwd + '/src/public/highcharts-theme.js', 'utf8', (err, data) => {
+                if (err) {
+                    response.writeHead(404);
+                    response.end("File Not Found !");
+                }
+                else {
+                    response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'text/css' });
+                    response.write(data);
+                    response.end();
+                }
+            });
+            break;
         // Routes for highcharts
         case '/result1':
         case '/result2':

@@ -1,4 +1,31 @@
-.navigation-btns{
+
+/* StyleSheet for Charts Page */
+
+#container {
+    height: 80vh;
+}
+
+#progressBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    background-color: teal;
+    width: 0%;
+    height: 10px;
+    -webkit-animation: load 1s linear;
+    animation: load 1s linear;
+}
+
+@keyframes load {
+  0% { width: 0% }
+  100% { width: 100% }
+}
+
+#navigation-btns{
+    height: 18vh;
+    margin: 1vh;
+    /* display: none;    */
     text-align: center;
 }
 #back{
@@ -15,3 +42,12 @@
     font-size: 18px;
     color: #fff;
 }
+
+#home{
+    background-color: teal;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+}
+

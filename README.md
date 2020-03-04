@@ -31,8 +31,8 @@ Extra Deliverables:
 After that json files and the respective charts can be viewed on browsers by running following command:
 
 > $ npm run api-serve\
-> $ npm run web-serve\
 > Server is running at http://localhost:5000/  (API Server)\
+> $ npm run web-serve\
 > Server is running at http://localhost:3000/  (Web Server)
 
 Go to the link http://localhost:5000/ to acceess the json ouputs and charts in your browser
