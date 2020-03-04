@@ -5,11 +5,11 @@ To run this project you need to have node js installed in your system so install
 ## After installing node js in your system just clone this project into your system and then run the project by running following command in your cloned directory
 To install all the required packeges:
 
-> $ npm install\
+> $ npm install
 
 To generate the output in the output folder
 
-> $ npm start\
+> $ npm start
 
 ## Then go to the folder Output inside src to view the outputs
 
@@ -31,9 +31,10 @@ Extra Deliverables:
 After that json files and the respective charts can be viewed on browsers by running following command:
 
 > $ npm run api-serve\
+> Server is running at http://localhost:5000/  (API Server)\
 > $ npm run web-serve\
-> Server is running at http://localhost:5000/  (API Server)
 > Server is running at http://localhost:3000/  (Web Server)
+
 Go to the link http://localhost:5000/ to acceess the json ouputs and charts in your browser
 
 Outputs are provided as different route points as follows:

@@ -6,7 +6,7 @@ const cwd = process.cwd();
 
 const outputpath = path.join(cwd + '/src/output/');
 
-// Creating server to serve the JSON
+// Creating server to serve the JSON outputs
 const server = http.createServer((request, response) => {
     const route = request.url;
     switch (route) {
