@@ -35,10 +35,6 @@ const server = http.createServer((request, response) => {
                     response.write("Internal Server Error");
                     response.end();
                 });
-            client.on('error', err => {
-                response.write(err);
-                response.end();
-            });
             break;
         case '/matches-per-team-per-year':
             client
@@ -244,7 +240,6 @@ const server = http.createServer((request, response) => {
                 .query('select * from deliveries;')
                 .then((deliveries) => {
                     let result = extra.playerDissmisal(deliveries.rows);
-                    console.log(result);
                     response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
                     response.write(JSON.stringify(result));
                     response.end();
@@ -286,5 +281,5 @@ const server = http.createServer((request, response) => {
 });
 
 server.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}/`);
+    console.log(`API Server is running at http://localhost:${port}/`);
 });

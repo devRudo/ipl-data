@@ -58,4 +58,4 @@ Charts are also provided at different routes as follows:
 7. http://localhost:3000/result6
 8. http://localhost:3000/result7
 9. http://localhost:3000/result8
-10.http://localhost:3000/result9
+10. http://localhost:3000/result9

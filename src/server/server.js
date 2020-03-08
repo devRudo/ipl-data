@@ -48,19 +48,6 @@ const server = http.createServer((request, response) => {
                 }
             });
             break;
-        case '/highcharts-theme.js':
-            fs.readFile(cwd + '/src/public/highcharts-theme.js', 'utf8', (err, data) => {
-                if (err) {
-                    response.writeHead(404);
-                    response.end("File Not Found !");
-                }
-                else {
-                    response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'text/css' });
-                    response.write(data);
-                    response.end();
-                }
-            });
-            break;
         // Routes for highcharts
         case '/result1':
         case '/result2':
@@ -94,5 +81,5 @@ const server = http.createServer((request, response) => {
 
 // listening to the server on the port
 server.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}/`);
+    console.log(`Web Server is running at http://localhost:${port}/`);
 });

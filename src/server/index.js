@@ -33,10 +33,10 @@ fs.stat(outputPath, (err, stats) => {
 let writefile = (filename, result) => {
     fs.writeFile(`${outputPath}${filename}`, JSON.stringify(result) + '\n', (err) => {
         if (err) {
-            console.error("Opoops ! Something went wrong");
+            console.log("Opoops ! Something went wrong");
         }
         else {
-            console.error(`${filename} is created successfully.`);
+            console.log(`${filename} is created successfully.`);
         }
     });
 };
@@ -61,6 +61,6 @@ let writeOutputs = () => {
                     writefile('topEconomicalBowlers.json', ipl.topEconomicalBowlers(matches, deliveries, '2015'));
                     writefile('maxNumberofTimesofDissmissal.json', extra.playerDissmisal(deliveries));
                 })
-                .catch(err => console.error("Ooops something went wrong ... Unable to find the deliveries csv file"));
-        }).catch(err => console.error("Ooops something went wrong ... Unable to find the matches csv file"));
+                .catch(err => console.log("Ooops something went wrong ... Unable to find the deliveries csv file"));
+        }).catch(err => console.log("Ooops something went wrong ... Unable to find the matches csv file"));
 }

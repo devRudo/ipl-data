@@ -108,7 +108,7 @@ module.exports.strikeRateViratPerseason = (matches, deliveries) => {
                    */
 
 module.exports.playerDissmisal = (deliveries) => {
-    let obj = deliveries.filter(delivery => delivery.player_dismissed != null && delivery.dismissal_kind != 'run out').map(delivery => [delivery.player_dismissed, delivery.bowler]).reduce((acc, curr) => {
+    let obj = deliveries.filter(delivery => delivery.player_dismissed != '' && delivery.dismissal_kind != 'run out').map(delivery => [delivery.player_dismissed, delivery.bowler]).reduce((acc, curr) => {
         if (acc[[curr[0], curr[1]]] === undefined) {
             acc[[curr[0], curr[1]]] = 1;
         }
