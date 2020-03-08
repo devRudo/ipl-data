@@ -13,6 +13,13 @@ To generate the output in the output folder
 
 ## Then go to the folder Output inside src to view the outputs
 
+Change .env.example to .env and set your own environment variables according to your postgres database
+
+To populate ipl database with csv data
+
+> $ npm run populate
+
+
 In the output folder you will get the following outputs:
 
 1. Number of matches played per year for all the years in IPL.
@@ -59,3 +66,4 @@ Charts are also provided at different routes as follows:
 8. http://localhost:3000/result7
 9. http://localhost:3000/result8
 10. http://localhost:3000/result9
+
