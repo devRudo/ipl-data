@@ -4,7 +4,6 @@
   "description": "This is the ipl project",
   "main": "index.js",
   "scripts": {
-    "populate": "node ./src/server/database/populate.js",
     "start": "node ./src/server/index.js >> server.log",
     "api-serve": "nodemon  ./src/server/api.js >> server.log",
     "web-serve": "nodemon ./src/server/server.js >> server.log"

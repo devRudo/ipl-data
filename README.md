@@ -7,18 +7,13 @@ To install all the required packeges:
 
 > $ npm install
 
-To generate the output in the output folder
+Change .env.example to .env and set your own environment variables according to your postgres database
+
+To generate the output and populate the database in the output folder
 
 > $ npm start
 
 ## Then go to the folder Output inside src to view the outputs
-
-Change .env.example to .env and set your own environment variables according to your postgres database
-
-To populate ipl database with csv data
-
-> $ npm run populate
-
 
 In the output folder you will get the following outputs:
 
