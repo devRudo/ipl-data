@@ -6,7 +6,7 @@ const cwd = process.cwd();
 //Creating server to serve web pages
 const server = http.createServer((request, response) => {
     const route = request.url;
-    // differnet routes
+    // Web Pages routes
     switch (route) {
         case '/':
         case '/index.html':
@@ -16,7 +16,7 @@ const server = http.createServer((request, response) => {
                     response.end("File Not Found !");
                 }
                 else {
-                    response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'text/html' });
+                    response.writeHead(200, { 'Content-Type': 'text/html' });
                     response.write(data);
                     response.end();
                 }
@@ -29,7 +29,7 @@ const server = http.createServer((request, response) => {
                     response.end("File Not Found !");
                 }
                 else {
-                    response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/javascript' });
+                    response.writeHead(200, { 'Content-Type': 'application/javascript' });
                     response.write(data);
                     response.end();
                 }
@@ -42,7 +42,7 @@ const server = http.createServer((request, response) => {
                     response.end("File Not Found !");
                 }
                 else {
-                    response.writeHead(200, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'text/css' });
+                    response.writeHead(200, { 'Content-Type': 'text/css' });
                     response.write(data);
                     response.end();
                 }

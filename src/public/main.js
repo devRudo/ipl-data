@@ -691,6 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.backgroundColor = "#eee";
     }
     xhr.onerror = () => {
+        document.body.style.display = "none";
         alert("Request failed");
     };
     // For going back and forth

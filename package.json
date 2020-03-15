@@ -4,7 +4,7 @@
   "description": "This is the ipl project",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/server/index.js >> server.log",
+    "start": "node ./src/server/index.js",
     "api-serve": "nodemon  ./src/server/api.js >> server.log",
     "web-serve": "nodemon ./src/server/server.js >> server.log"
   },

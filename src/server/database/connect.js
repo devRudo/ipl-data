@@ -1,17 +1,10 @@
 // for automatically fetching environment variables from .env file
 require('dotenv').config();
-const { Client } = require('pg');
-let client = new Client();
+const { Pool } = require('pg');
+let pool = new Pool({
+    max: 80,
+    idleTimeoutMillis: 1000,
+    connectionTimeoutMillis: 0,
+});
 
-// function for connecting to database
-let dbconnect = () => {
-    client.connect()
-        .then(() => {
-            console.log("Connected Successfully");
-        })
-        .catch((err) => {
-            console.log(err.stack.split("\n")[0].split(":")[1]);
-        });
-};
-
-module.exports = { client, dbconnect };
+module.exports = pool;
